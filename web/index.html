@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hermes-Colega — El colega especializado en TU startup</title>
+<meta name="description" content="Un colega de IA que aprende de tu emprendimiento, recuerda por dónde vas y adapta su consejo a tu startup. El primer signo de una startup nativa de IA.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,900&family=Newsreader:ital,opsz@0,6..72;1,6..72&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1c1a17;          /* casi negro cálido, tinta */
+    --ink-soft:#4a4640;      /* tinta diluida */
+    --paper:#f4f0e6;         /* papel cálido, no crema-terracota */
+    --paper-deep:#eae4d4;    /* papel sombreado */
+    --teal:#1f5c52;          /* verde petróleo profundo — el acento */
+    --teal-bright:#2f7d6e;
+    --clay:#b8613a;          /* usado con MUCHA restricción, solo marcas de resultado */
+    --line:#d8d0bd;          /* hairline */
+    --focus:#2f7d6e;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Newsreader',Georgia,serif;
+    font-size:clamp(1.05rem,0.9rem + 0.5vw,1.22rem);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  }
+  a{color:inherit}
+  ::selection{background:var(--teal);color:var(--paper)}
+
+  .wrap{max-width:1080px;margin:0 auto;padding:0 clamp(1.2rem,4vw,3rem)}
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:.85rem 0}
+  .brand{
+    font-family:'Fraunces',serif;font-weight:600;font-size:1.15rem;letter-spacing:-.01em;
+    display:flex;align-items:center;gap:.55rem;text-decoration:none;
+  }
+  .brand .mark{
+    width:1.55rem;height:1.55rem;border-radius:50%;
+    background:var(--teal);color:var(--paper);
+    display:grid;place-items:center;font-family:'Fraunces',serif;font-weight:900;font-size:.95rem;
+    flex:none;
+  }
+  .nav-links{display:flex;gap:1.6rem;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:.8rem;letter-spacing:.02em}
+  .nav-links a{text-decoration:none;color:var(--ink-soft);transition:color .2s}
+  .nav-links a:hover{color:var(--teal)}
+  .nav-links a:focus-visible{outline:2px solid var(--focus);outline-offset:3px;border-radius:2px}
+  @media(max-width:620px){.nav-links a.hide-sm{display:none}}
+
+  /* ---------- HERO ---------- */
+  .hero{padding:clamp(3.5rem,9vw,7rem) 0 clamp(2.5rem,6vw,4.5rem)}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--teal);margin-bottom:1.4rem;display:flex;align-items:center;gap:.7rem;
+  }
+  .eyebrow::before{content:"";width:1.8rem;height:1px;background:var(--teal)}
+  h1{
+    font-family:'Fraunces',serif;font-weight:500;
+    font-size:clamp(2.4rem,1.4rem + 4.4vw,4.6rem);
+    line-height:1.02;letter-spacing:-.022em;
+    max-width:16ch;
+  }
+  h1 .tu{font-style:italic;font-weight:600}
+  h1 .name{display:block;color:var(--teal);font-weight:600;margin-top:.15em}
+  .lede{
+    margin-top:1.7rem;max-width:44ch;font-size:clamp(1.12rem,1rem + .5vw,1.35rem);
+    color:var(--ink-soft);line-height:1.55;
+  }
+  .cta-row{margin-top:2.4rem;display:flex;flex-wrap:wrap;gap:.9rem;align-items:center}
+  .btn{
+    font-family:'IBM Plex Mono',monospace;font-size:.82rem;letter-spacing:.02em;
+    text-decoration:none;padding:.85rem 1.4rem;border-radius:2px;
+    display:inline-flex;align-items:center;gap:.5rem;transition:transform .15s, background .2s, box-shadow .2s;
+  }
+  .btn-primary{background:var(--teal);color:var(--paper);box-shadow:0 1px 0 rgba(0,0,0,.12)}
+  .btn-primary:hover{background:var(--teal-bright);transform:translateY(-1px)}
+  .btn-ghost{color:var(--ink);border:1px solid var(--line)}
+  .btn-ghost:hover{border-color:var(--teal);color:var(--teal)}
+  .btn:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+  .btn .arr{transition:transform .2s}
+  .btn:hover .arr{transform:translateX(3px)}
+
+  /* ---------- SIGNATURE: la ficha de memoria ---------- */
+  .signature{margin-top:clamp(3rem,7vw,5rem)}
+  .sig-label{
+    font-family:'IBM Plex Mono',monospace;font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--ink-soft);margin-bottom:1rem;display:flex;align-items:center;gap:.6rem;
+  }
+  .sig-label b{color:var(--teal);font-weight:500}
+  .memcard{
+    border:1px solid var(--line);border-radius:6px;background:linear-gradient(180deg,#fbf8f0,#f4f0e6);
+    padding:clamp(1.3rem,3vw,2rem);position:relative;overflow:hidden;
+    box-shadow:0 1px 2px rgba(28,26,23,.04),0 8px 30px -18px rgba(28,26,23,.25);
+  }
+  .memcard::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--teal);
+  }
+  .mem-turn{padding:.55rem 0;display:grid;grid-template-columns:auto 1fr;gap:.9rem;align-items:start}
+  .mem-turn + .mem-turn{border-top:1px dashed var(--line)}
+  .mem-who{
+    font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--ink-soft);padding-top:.28rem;white-space:nowrap;
+  }
+  .mem-who.hermes{color:var(--teal)}
+  .mem-txt{font-size:1.02rem;line-height:1.5}
+  .mem-txt .strike{color:var(--ink-soft);text-decoration:line-through;text-decoration-color:var(--clay);text-decoration-thickness:1.5px}
+  .mem-tag{
+    display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:.64rem;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--clay);border:1px solid color-mix(in srgb,var(--clay) 40%,transparent);
+    border-radius:2px;padding:.08rem .4rem;margin-left:.15rem;vertical-align:middle;
+  }
+  .mem-caption{
+    margin-top:1.1rem;font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--ink-soft);
+    line-height:1.5;
+  }
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:clamp(3.2rem,8vw,6rem) 0}
+  .sec-head{display:flex;align-items:baseline;gap:1rem;margin-bottom:2.4rem}
+  .sec-num{
+    font-family:'IBM Plex Mono',monospace;font-size:.8rem;color:var(--teal);letter-spacing:.05em;
+    padding-top:.35rem;flex:none;
+  }
+  h2{
+    font-family:'Fraunces',serif;font-weight:500;letter-spacing:-.018em;line-height:1.08;
+    font-size:clamp(1.8rem,1.2rem + 2.4vw,3rem);max-width:20ch;
+  }
+  .prose{max-width:60ch;font-size:clamp(1.08rem,1rem + .4vw,1.28rem);color:var(--ink-soft);line-height:1.65}
+  .prose + .prose{margin-top:1.1rem}
+  .prose strong{color:var(--ink);font-weight:600}
+  .divider{border:0;border-top:1px solid var(--line);margin:0}
+
+  /* momento section */
+  .momento{background:var(--ink);color:var(--paper)}
+  .momento .sec-num{color:var(--teal-bright)}
+  .momento h2{color:var(--paper);max-width:24ch}
+  .momento .prose{color:#cdc6b6}
+  .momento .prose strong{color:#fff}
+  .momento .kicker{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:500;
+    font-size:clamp(1.3rem,1rem + 1.4vw,1.9rem);line-height:1.3;color:var(--paper);
+    max-width:30ch;margin-top:1.8rem;padding-left:1.3rem;border-left:3px solid var(--teal-bright);
+  }
+
+  /* recorrido — steps */
+  .steps{display:grid;gap:1.1rem;margin-top:.5rem}
+  .step{
+    border:1px solid var(--line);border-radius:6px;background:#fbf8f0;
+    padding:clamp(1.3rem,3vw,1.9rem);display:grid;grid-template-columns:auto 1fr auto;
+    gap:clamp(1rem,3vw,2rem);align-items:center;transition:border-color .2s,transform .2s,box-shadow .2s;
+  }
+  .step:hover{border-color:var(--teal);transform:translateY(-2px);box-shadow:0 12px 30px -20px rgba(31,92,82,.5)}
+  .step-n{
+    font-family:'Fraunces',serif;font-weight:900;font-size:clamp(2rem,3vw,2.8rem);
+    color:var(--paper-deep);line-height:1;position:relative;
+  }
+  .step:hover .step-n{color:var(--teal)}
+  .step-body h3{font-family:'Fraunces',serif;font-weight:600;font-size:1.3rem;letter-spacing:-.01em;margin-bottom:.35rem}
+  .step-body p{font-size:1rem;color:var(--ink-soft);line-height:1.5;max-width:52ch}
+  .step-body .tool{font-family:'IBM Plex Mono',monospace;font-size:.82rem;color:var(--teal);font-style:normal}
+  .step-cta{
+    font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--teal);text-decoration:none;
+    white-space:nowrap;display:inline-flex;gap:.4rem;align-items:center;border-bottom:1px solid transparent;transition:border-color .2s
+  }
+  .step-cta:hover{border-color:var(--teal)}
+  .step-cta .arr{transition:transform .2s}.step-cta:hover .arr{transform:translateX(3px)}
+  .step-cta:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+  .commit{
+    font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.05em;text-transform:uppercase;
+    color:var(--ink-soft);margin-top:.5rem;display:flex;gap:.5rem;align-items:center
+  }
+  .commit .dot{width:6px;height:6px;border-radius:50%;background:var(--teal);flex:none}
+  @media(max-width:640px){
+    .step{grid-template-columns:auto 1fr;gap:1rem}
+    .step-cta{grid-column:1 / -1;justify-self:start;margin-top:.3rem}
+  }
+
+  /* como funciona — ciclo */
+  .cycle{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;margin-top:.5rem;counter-reset:c}
+  .cyc{
+    border-top:2px solid var(--teal);padding-top:1.1rem;position:relative;
+  }
+  .cyc .k{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:.6rem}
+  .cyc h4{font-family:'Fraunces',serif;font-weight:600;font-size:1.25rem;margin-bottom:.4rem;letter-spacing:-.01em}
+  .cyc p{font-size:.98rem;color:var(--ink-soft);line-height:1.5}
+  .cycle-note{
+    margin-top:2rem;font-family:'Fraunces',serif;font-style:italic;font-size:clamp(1.15rem,1rem + .7vw,1.5rem);
+    color:var(--ink);max-width:40ch;line-height:1.4
+  }
+  @media(max-width:720px){.cycle{grid-template-columns:1fr;gap:1.6rem}}
+
+  /* cierre */
+  .close{text-align:center;padding:clamp(4rem,10vw,7rem) 0}
+  .close h2{margin:0 auto 2rem;max-width:22ch}
+  .close .cta-row{justify-content:center}
+
+  footer{border-top:1px solid var(--line);padding:2.5rem 0;font-family:'IBM Plex Mono',monospace;font-size:.76rem;color:var(--ink-soft)}
+  .foot-inner{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;align-items:center}
+  footer a{color:var(--ink-soft);text-decoration:none;border-bottom:1px solid transparent;transition:.2s}
+  footer a:hover{color:var(--teal);border-color:var(--teal)}
+
+  /* reveal on scroll */
+  .reveal{opacity:0;transform:translateY(14px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-inner">
+    <a href="#top" class="brand"><span class="mark">H</span>Hermes-Colega</a>
+    <div class="nav-links">
+      <a href="#recorrido" class="hide-sm">Cómo empezar</a>
+      <a href="#proyecto" class="hide-sm">El proyecto</a>
+      <a href="https://github.com/mcanno" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+  </div>
+</nav>
+
+<main id="top">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="wrap">
+      <p class="eyebrow reveal">Startup nativa de IA</p>
+      <h1 class="reveal">El colega especializado que necesitas en <span class="tu">TU</span> startup<span class="name">Hermes-Colega</span></h1>
+      <p class="lede reveal">Un colega de IA que aprende de tu emprendimiento, recuerda por dónde vas y te ayuda a decidir qué hacer a continuación — con conocimiento validado y con lo que ya sabe de ti.</p>
+      <div class="cta-row reveal">
+        <a href="#recorrido" class="btn btn-primary">Empieza gratis, sin instalar nada <span class="arr">→</span></a>
+        <a href="#como" class="btn btn-ghost">Cómo funciona</a>
+      </div>
+
+      <!-- SIGNATURE: ficha de memoria — el ciclo que recuerda -->
+      <div class="signature reveal">
+        <p class="sig-label"><b>◆</b> Lo que un colega hace y un buscador no: <b>recordar</b></p>
+        <div class="memcard">
+          <div class="mem-turn">
+            <span class="mem-who hermes">Hermes · lun</span>
+            <span class="mem-txt">«Antes de escalar, diagnostica en qué fase de poder está tu startup.»</span>
+          </div>
+          <div class="mem-turn">
+            <span class="mem-who">Tú · jue</span>
+            <span class="mem-txt">«Lo intenté, el diagnóstico no me sirvió.» <span class="mem-tag">hipótesis falseada</span></span>
+          </div>
+          <div class="mem-turn">
+            <span class="mem-who hermes">Hermes · jue</span>
+            <span class="mem-txt"><span class="strike">Vuelve a diagnosticar la fase.</span> «Dejemos eso. Vayamos directo a los costes de cambio y el recurso que ya controlas.»</span>
+          </div>
+          <p class="mem-caption">Misma pregunta, semana distinta. La segunda respuesta cambió porque Hermes recordó que la primera no funcionó. Un buscador te habría repetido lo mismo.</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <hr class="divider">
+
+  <!-- EL PROBLEMA -->
+  <section id="problema">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-num">01</span>
+        <h2>Emprender es decidir a ciegas</h2>
+      </div>
+      <p class="prose reveal">Cada decisión de una startup se toma con información incompleta. El consejo genérico —el de los libros, el de los chatbots— no conoce tu caso: tu segmento, tus clientes, lo que ya probaste y no funcionó. Y un consultor que sí te conoce cuesta lo que una startup temprana no tiene.</p>
+      <p class="prose reveal"><strong>Hermes-Colega junta las dos cosas:</strong> el conocimiento validado sobre cómo se construye una startup, y el conocimiento de la tuya en concreto.</p>
+    </div>
+  </section>
+
+  <!-- EL MOMENTO -->
+  <section class="momento" id="momento">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-num">02</span>
+        <h2>Nunca hubo mejor momento para emprender</h2>
+      </div>
+      <p class="prose reveal">…si entiendes y te apoyas bien en la IA. La IA ha cambiado las reglas. Lo que antes exigía un equipo y meses de trabajo, hoy lo puede hacer un fundador con las herramientas adecuadas. Pero el apalancamiento no viene de usar IA de vez en cuando: viene de <strong>entenderla y utilizarla de forma inteligente</strong>.</p>
+      <p class="prose reveal">En esta nueva etapa, el criterio vale más que la antigüedad, y el control sobre tu propio camino vale más que cualquier atajo. La ventaja no es una herramienta más en tu stack —es un colega que domina muchas herramientas y conoce tu startup como nadie, porque ha estado contigo desde el principio y te entiende.</p>
+      <p class="kicker reveal">Cuanto más trabajas con tu Hermes, más se especializa en TU startup. Deja de ser una herramienta ocasional y se convierte en tu colega inseparable — el primer signo de una startup nativa de IA.</p>
+    </div>
+  </section>
+
+  <!-- RECORRIDO -->
+  <section id="recorrido">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-num">03</span>
+        <h2>Empieza donde quieras. Avanza cuando quieras.</h2>
+      </div>
+      <div class="steps">
+
+        <div class="step reveal">
+          <div class="step-n">1</div>
+          <div class="step-body">
+            <h3>Conoce tu situación</h3>
+            <p>Responde unas preguntas y obtén un informe de en qué punto está tu emprendimiento, con criterio metodológico real. <span class="tool">startup-advisor</span> · por web, gratis, sin instalar nada.</p>
+            <div class="commit"><span class="dot"></span> Sin compromiso</div>
+          </div>
+          <a href="#" class="step-cta" data-tool="advisor">Probar <span class="arr">→</span></a>
+        </div>
+
+        <div class="step reveal">
+          <div class="step-n">2</div>
+          <div class="step-body">
+            <h3>Descubre tu próxima acción</h3>
+            <p>Dale tu situación y te dirá cuál es la actividad más relevante para avanzar ahora, apoyada en seis especialistas de dominio. <span class="tool">startup-next</span> · por web.</p>
+            <div class="commit"><span class="dot"></span> Sin compromiso</div>
+          </div>
+          <a href="#" class="step-cta" data-tool="next">Probar <span class="arr">→</span></a>
+        </div>
+
+        <div class="step reveal">
+          <div class="step-n">3</div>
+          <div class="step-body">
+            <h3>Ten tu propio colega</h3>
+            <p>Instala tu instancia privada de <span class="tool">Hermes</span>: recuerda tu historia, aprende de cada resultado y adapta su consejo a tu startup. Tuya, en tu entorno, bajo tu control.</p>
+            <div class="commit"><span class="dot"></span> Tu infraestructura · Docker o local</div>
+          </div>
+          <a href="#" class="step-cta" data-tool="hermes">Próximamente <span class="arr">→</span></a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- COMO FUNCIONA -->
+  <section id="como">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-num">04</span>
+        <h2>Aprende de tu startup, no solo de los libros</h2>
+      </div>
+      <div class="cycle">
+        <div class="cyc reveal">
+          <div class="k">Paso uno</div>
+          <h4>Te aconseja</h4>
+          <p>Con conocimiento validado y con lo que ya sabe de ti. No consejo genérico: consejo situado en tu caso.</p>
+        </div>
+        <div class="cyc reveal">
+          <div class="k">Paso dos</div>
+          <h4>Tú decides y actúas</h4>
+          <p>La decisión siempre es tuya. Hermes aporta criterio y argumentos; el juicio —y la responsabilidad— es del fundador.</p>
+        </div>
+        <div class="cyc reveal">
+          <div class="k">Paso tres</div>
+          <h4>Aprende del resultado</h4>
+          <p>Le cuentas cómo fue, lo recuerda, y su próximo consejo ya lo tiene en cuenta. El ciclo se cierra y vuelve a empezar.</p>
+        </div>
+      </div>
+      <p class="cycle-note reveal">Ese ciclo es la diferencia entre un colega que te acompaña y un buscador que repite lo mismo cada vez.</p>
+    </div>
+  </section>
+
+  <!-- CIERRE -->
+  <section class="close" id="empezar">
+    <div class="wrap">
+      <div class="sec-head" style="justify-content:center">
+        <h2>Tu startup es única.<br>Tu colega también debería serlo.</h2>
+      </div>
+      <div class="cta-row">
+        <a href="#recorrido" class="btn btn-primary">Empieza gratis <span class="arr">→</span></a>
+        <a href="https://github.com/mcanno" target="_blank" rel="noopener" class="btn btn-ghost">Ver el proyecto en GitHub ↗</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot-inner">
+    <span>Hermes-Colega · un proyecto sobre emprender en la era de la IA</span>
+    <span><a href="#proyecto">El proyecto</a> · <a href="https://github.com/mcanno" target="_blank" rel="noopener">GitHub</a></span>
+  </div>
+</footer>
+
+<script>
+  // Reveal on scroll
+  const io=new IntersectionObserver((es)=>{
+    es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})
+  },{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // Placeholders para los enlaces de herramientas (se conectan a las URLs reales al desplegar)
+  const TOOLS={
+    advisor:'https://startup-advisor-sand.vercel.app/',
+    next:'https://startup-next-ui.vercel.app',
+    hermes:'#'     // TODO: sección de instrucciones de instalación de Hermes (Docker aún no empaquetado)
+  };
+  document.querySelectorAll('[data-tool]').forEach(a=>{
+    const t=a.getAttribute('data-tool');
+    if(TOOLS[t] && TOOLS[t]!=='#'){a.setAttribute('href',TOOLS[t]);a.setAttribute('target','_blank');a.setAttribute('rel','noopener')}
+    else{a.addEventListener('click',ev=>{ev.preventDefault();a.querySelector('.arr').textContent='· pendiente de enlazar';setTimeout(()=>a.querySelector('.arr').textContent='→',1600)})}
+  });
+</script>
+</body>
+</html>
