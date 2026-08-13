@@ -1,6 +1,6 @@
-# La expansión a seis especialistas de dominio
+# La expansión a siete especialistas de dominio
 
-> Cómo startup-next pasó de dos especialistas de dominio a los seis que
+> Cómo startup-next pasó de dos especialistas de dominio a los siete que
 > cubren hoy el ciclo de vida completo de una startup, y qué frontera
 > distingue a cada uno.
 
@@ -14,6 +14,7 @@
 | `operaciones` | Cómo se organiza y ejecuta el trabajo interno, adopción de IA en la operación |
 | `escalado` | Crecimiento defendible una vez hay encaje producto-mercado: motor de crecimiento, barreras competitivas |
 | `plataformas` | Negocios de plataforma: dos o más lados de mercado, efectos de red, arranque en frío |
+| `gobernanza` | Estructura legal/estatutaria y blindaje de la misión frente a la extracción de valor cortoplacista: gobernanza fiduciaria, clases de acciones, estructuras de holding |
 
 Dos roles de la taxonomía original (`financiacion`, `administracion`)
 desaparecieron por completo — no caen a "sin especialista" en tiempo de
@@ -60,6 +61,14 @@ cada caso: está escrita, versionada, una frase por especialista:
 >   especialista aunque la startup también esté en fase de ideación o
 >   escalado; si no, se clasifica por fase como de costumbre aunque el
 >   negocio sea una plataforma.
+> - **gobernanza**: la tarea trata la estructura legal/estatutaria de la
+>   empresa o cómo blindar su misión frente a la extracción de valor
+>   cortoplacista (composición y deber fiduciario del directorio, clases
+>   de acciones y derechos de voto, estructuras de holding o fideicomiso,
+>   protección ante adquisiciones hostiles o presión de inversores) — no
+>   el diseño del modelo de negocio en sí (eso es ideacion) ni el motor de
+>   crecimiento del negocio (eso es escalado), aunque la tarea surja en
+>   cualquier fase de la startup.
 
 ## Las fuentes de conocimiento, y cómo se repartieron
 
@@ -80,9 +89,12 @@ vez:
   accionable (diseño de la interacción central, arranque en frío, bucles
   de crecimiento) frente a un enfoque más panorámico.
 - Varios artículos sobre organizaciones nativas de IA alimentan a
-  `operaciones` — el terreno más nuevo y menos consolidado de los seis,
+  `operaciones` — el terreno más nuevo y menos consolidado de los siete,
   con el conocimiento marcado explícitamente como emergente, no
   verificado con el mismo rigor que el resto.
+- ***Incorruptible*** (Eric Ries) alimenta a `gobernanza`, con status
+  `Verified` — a diferencia de `operaciones`, es una fuente publicada con
+  ISBN real, no una categoría todavía en formación.
 
 Donde una fuente ya existente en el sistema cubría parcialmente a un
 especialista nuevo, se reetiquetó de forma aditiva (nunca se le quita
@@ -102,7 +114,7 @@ contra producción antes de empezar el siguiente.
 
 ## Verificación
 
-El cambio al prompt del orquestador es compartido por los seis roles —
+El cambio al prompt del orquestador es compartido por los siete roles —
 cualquier tarea, incluidas las que atienden los especialistas más
 antiguos, pasa por el prompt actualizado. Por eso la verificación de cada
 especialista nuevo nunca fue aislada: exige reconfirmar, cada vez, que los

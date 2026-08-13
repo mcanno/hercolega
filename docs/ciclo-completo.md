@@ -1,51 +1,89 @@
-# La verificación del ciclo completo
+# El ciclo completo
 
-> Cómo se demostró que la memoria de Hermes cambia el consejo —que el ciclo vive, y no es una promesa.
+> Cómo el conocimiento validado y la memoria del entorno se combinan en acción, y
+> cómo esa acción vuelve a alimentar la memoria. El motor del sistema, en su forma
+> más simple.
 
-## Qué había que demostrar
+---
 
-Toda la arquitectura de Hermes-Colega existe para sostener una afirmación: que un colega con memoria da mejores consejos que un buscador sin ella, porque **recuerda lo que ya se probó**. Es fácil enunciarlo. Es fácil, incluso, construir todas las piezas que deberían hacerlo posible —la memoria, la captura de resultados, la composición del contexto histórico, la invocación a los especialistas—. Lo difícil, y lo que de verdad importa, es demostrar que esas piezas, encadenadas, producen el efecto prometido: que ante la misma pregunta, tras un resultado, **el consejo cambia**.
+## El ciclo
 
-Hasta este punto, cada pieza del sistema se había verificado por separado. Los seis especialistas respondían bien de forma aislada. La memoria guardaba resultados. El contexto histórico se componía. Pero nada había ejercitado el *ciclo entero de principio a fin*: el recorrido que va del consejo, a la acción del fundador, al resultado que se cuenta, a la memoria que lo registra, a la siguiente invocación que ya lo tiene en cuenta. Ese ciclo es la tesis. Demostrarlo vivo era la prueba central del proyecto.
+Una buena acción proviene, normalmente, de una decisión que se ha tomado teniendo en
+cuenta muchas variables: el conocimiento, la experiencia, las capacidades, el
+contexto, los datos (la memoria) y —por encima de todo— el juicio del decisor.
 
-## El montaje de la prueba
+El conocimiento no surge de la información: surge de la **inteligencia que se aplica**
+sobre la información correcta del entorno y sobre la información de la experiencia. El
+**conocimiento del entorno** —qué ocurre en esta startup concreta, ahora— vive en la
+memoria: el registro de resultados y de las variables de entorno en que se dieron. Y
+el conocimiento de la experiencia está también asociado a un entorno ya pasado: si el
+entorno cambia, ese conocimiento deja de ser válido y necesitará nuevas experiencias.
 
-La verificación se hizo contra el sistema real en producción, no contra un entorno simulado. Se partió de una situación limpia y controlada: una startup de prueba con una recomendación inicial ya registrada en memoria, para poder observar el ciclo desde un estado conocido.
+Por eso la decisión sobre qué acción tomar debe contar con la memoria (los datos) y
+con el contexto (sus variaciones), y a partir de ahí que el fundador aplique su
+particular juicio.
 
-El recorrido de la prueba tuvo tres momentos:
+Toda acción ejecutada genera un resultado que vuelve a la memoria, con sus variables
+de entorno. El conocimiento nuevo surge cuando la información del resultado pasa por
+el filtro de la inteligencia: la acción con buenos resultados se vuelve experiencia,
+la experiencia se vuelve conocimiento validado para ese entorno, y ese conocimiento
+ayuda a diseñar la siguiente acción. Es un círculo evolutivo de mejora, no una
+secuencia determinista.
 
-**Primero, una recomendación inicial.** El sistema, con el contexto de la startup, produjo su consejo de partida.
+---
 
-**Después, un resultado del fundador.** Se introdujo —tal como lo haría un fundador contándolo— que la vía recomendada se había intentado y no había funcionado. El mecanismo de cruce identificó a qué recomendación pendiente correspondía ese resultado, y lo registró en la memoria con su estado: una hipótesis falseada.
+## La memoria no es un mandato
 
-**Por último, la misma pregunta, otra vez.** Con la memoria ya actualizada, se volvió a invocar al sistema con la tarea original. La pregunta era idéntica; lo único distinto era que la memoria ahora contenía el resultado del intento fallido.
+Aquí está lo importante, y es fácil de hacer mal.
 
-La verificación estrella era comparar la primera recomendación con la segunda.
+La memoria de la startup —lo que se intentó, lo que funcionó, lo que falló— no es
+una lista de órdenes. Es información generada en un contexto, y ese contexto tenía su
+propia luz. Un experimento que salió mal hace seis meses salió mal *entonces*, con
+las variables de entonces. No es una verdad eterna: es un dato situado.
 
-## El resultado
+Usarla bien exige releerla a la luz de hoy — contrastar el contexto en que se produjo
+el hecho con el contexto actual. De ahí salen los dos errores que hay que evitar, y
+son opuestos:
 
-La diferencia fue clara y coherente.
+- **Repetir el error:** ignorar la memoria y tropezar con la misma piedra. El fallo
+  de quien no aprende.
+- **Ser pertinaz y cerril:** obedecer la memoria como si el contexto no hubiera
+  cambiado. "Esto ya falló, no sirve" — cuando quizá falló porque *entonces* faltaba
+  algo que hoy ya está. El fallo de quien aprende, pero rígido.
 
-**La primera recomendación** giraba, en sus distintas variantes, alrededor de una misma idea: diagnosticar primero en qué fase de poder se encontraba la startup antes de actuar. Era un consejo razonable de partida —establecer el diagnóstico antes de elegir la palanca.
+La memoria bien usada navega entre ambos: tiene en cuenta lo que pasó, pero lo
+reinterpreta con las variables de ahora. Ni la ignora ni la obedece — la lee.
 
-El fundador reportó que ese diagnóstico se había intentado y no había servido.
+---
 
-**La segunda recomendación**, ante la misma tarea exacta, **abandonó por completo el enfoque del diagnóstico de fase.** Ninguna de sus variantes lo mencionaba. En su lugar, saltó directamente a las palancas concretas que la situación permitía —costes de cambio, el recurso que la startup ya controlaba, reforzar la posición existente—, que eran precisamente las alternativas que quedaban una vez descartada la primera vía.
+## Para eso está la inteligencia
 
-El especialista real de producción —no una simulación— había recordado que el primer enfoque no funcionó, y redirigió. Un buscador de documentos, ante la misma pregunta las dos veces, habría devuelto lo mismo, porque no tiene memoria de lo ocurrido entre una consulta y otra. El sistema devolvió algo distinto *por causa del resultado capturado*. El mantra que gobierna la visión del proyecto —la acción genera experiencia, la experiencia funda la siguiente acción— dejó de ser una frase y pasó a ser comportamiento observable.
+Lo que permite esa lectura es, precisamente, la inteligencia del colega. Una memoria
+tonta solo devuelve lo guardado: "esto pasó". Un colega inteligente hace más: mira el
+hecho pasado y evalúa si las variables que lo rodeaban **siguen siendo las mismas o
+han cambiado**. Si el contexto se mantiene, la lección de entonces vale hoy. Si ha
+cambiado, la lección hay que recalibrarla — o incluso invertirla.
 
-## Qué es real y qué se simuló
+Ese juicio de "¿sigue vigente el contexto de aquello?" es el trabajo del colega, y es
+lo que convierte la memoria de un archivo muerto en criterio vivo. Coherente con el
+resto del sistema: la memoria es información para el juicio, no una instrucción que se
+obedezca. Y el juicio final —si el contexto ha cambiado lo bastante— es del fundador;
+el colega se lo pone sobre la mesa, con las variables de entonces y las de ahora, para
+que decida mejor.
 
-Una verificación solo vale lo que vale su honestidad sobre sus propios límites. Esta tiene una parte real y una parte simulada, y la distinción importa.
+Esto es también la tesis del proyecto aplicada a la propia memoria: el conocimiento
+caduca cuando su contexto caduca — y la memoria de la startup es conocimiento, atado
+al contexto en que se generó. Releerla a la luz de hoy es no dejar que se estanque.
 
-**Lo real —y es donde se juega la tesis—** es la invocación al sistema de especialistas en producción. La recomendación que cambió la produjo el especialista real, con su mecanismo real de recuperación de conocimiento, contra el servicio desplegado. Ahí, donde se demuestra que la memoria modula el consejo, no hay simulación.
+---
 
-**Lo simulado** es el canal conversacional: en un uso real, el fundador contaría su resultado en una conversación, y una interfaz recogería ese texto. Como esa interfaz es trabajo posterior, la prueba le pasó el texto del fundador directamente a la función que lo procesa —que es exactamente como esa función está diseñada para recibirlo—. No se falseó el resultado; se sustituyó la interfaz de entrada por una llamada directa. La lógica que cruza el resultado contra la recomendación y lo registra en memoria es la real.
+## Verificado en la práctica
 
-Dicho de otro modo: lo que se simuló fue *cómo llega* el resultado del fundador, no *qué hace el sistema con él*. Y la pregunta que la verificación venía a responder —¿cambia el consejo cuando la memoria registra un resultado?— se responde íntegramente en la parte real.
-
-## Lo que esto cierra, y lo que abre
-
-Con esta verificación, la columna vertebral del proyecto queda demostrada: el ciclo completo funciona de punta a punta, y la memoria hace lo que la tesis prometía. No es un conjunto de piezas que *deberían* encajar; es un ciclo que se observó cerrar.
-
-Queda abierto, como trabajo natural siguiente, hacer real la última pieza simulada —el canal conversacional por el que el fundador cuenta sus resultados— para que el ciclo funcione sin ninguna sustitución. Pero eso es refinar la entrada de un ciclo que ya está probado, no demostrar un ciclo por probar. La diferencia entre "las piezas existen" y "el ciclo vive" ya está saldada.
+El ciclo no es teoría: funciona sobre la arquitectura real. El agente del emprendedor
+aporta la memoria como contexto histórico, consulta el conocimiento especializado a
+través del servidor MCP, y devuelve una recomendación situada — que cambia según el
+contexto que se le da. Cuando la situación del fundador incluye una tensión (querer
+hacer algo que se aparta de lo recomendado), el consejo se modula en consecuencia: no
+el mismo consejo con una advertencia, sino un consejo consciente de ese contexto. La
+memoria, releída a la luz de hoy, cambia lo que el sistema aconseja — que es
+exactamente lo que este ciclo afirma.

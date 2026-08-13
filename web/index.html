@@ -3,411 +3,352 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hermes-Colega — El colega especializado en TU startup</title>
-<meta name="description" content="Un colega de IA que aprende de tu emprendimiento, recuerda por dónde vas y adapta su consejo a tu startup. El primer signo de una startup nativa de IA.">
+<title>Hercolega — Emprender hoy, con conocimiento y con un colega de IA</title>
+<meta name="description" content="Nunca hubo mejor momento para emprender, si lo haces con conocimiento y con la IA bien apoyada. Un colega que conoce tu historia y te ayuda a mejorarla.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,900&family=Newsreader:ital,opsz@0,6..72;1,6..72&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --ink:#1c1a17;          /* casi negro cálido, tinta */
-    --ink-soft:#4a4640;      /* tinta diluida */
-    --paper:#f4f0e6;         /* papel cálido, no crema-terracota */
-    --paper-deep:#eae4d4;    /* papel sombreado */
-    --teal:#1f5c52;          /* verde petróleo profundo — el acento */
-    --teal-bright:#2f7d6e;
-    --clay:#b8613a;          /* usado con MUCHA restricción, solo marcas de resultado */
-    --line:#d8d0bd;          /* hairline */
-    --focus:#2f7d6e;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{
-    background:var(--paper);
-    color:var(--ink);
-    font-family:'Newsreader',Georgia,serif;
-    font-size:clamp(1.05rem,0.9rem + 0.5vw,1.22rem);
-    line-height:1.6;
-    -webkit-font-smoothing:antialiased;
-    overflow-x:hidden;
-  }
-  @media (prefers-reduced-motion:reduce){
-    *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
-  }
-  a{color:inherit}
-  ::selection{background:var(--teal);color:var(--paper)}
-
-  .wrap{max-width:1080px;margin:0 auto;padding:0 clamp(1.2rem,4vw,3rem)}
-
-  /* ---------- NAV ---------- */
-  nav{
-    position:sticky;top:0;z-index:50;
-    background:color-mix(in srgb, var(--paper) 88%, transparent);
-    backdrop-filter:blur(8px);
-    border-bottom:1px solid var(--line);
-  }
-  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:.85rem 0}
-  .brand{
-    font-family:'Fraunces',serif;font-weight:600;font-size:1.15rem;letter-spacing:-.01em;
-    display:flex;align-items:center;gap:.55rem;text-decoration:none;
-  }
-  .brand .mark{
-    width:1.55rem;height:1.55rem;border-radius:50%;
-    background:var(--teal);color:var(--paper);
-    display:grid;place-items:center;font-family:'Fraunces',serif;font-weight:900;font-size:.95rem;
-    flex:none;
-  }
-  .nav-links{display:flex;gap:1.6rem;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:.8rem;letter-spacing:.02em}
-  .nav-links a{text-decoration:none;color:var(--ink-soft);transition:color .2s}
-  .nav-links a:hover{color:var(--teal)}
-  .nav-links a:focus-visible{outline:2px solid var(--focus);outline-offset:3px;border-radius:2px}
-  @media(max-width:620px){.nav-links a.hide-sm{display:none}}
-
-  /* ---------- HERO ---------- */
-  .hero{padding:clamp(3.5rem,9vw,7rem) 0 clamp(2.5rem,6vw,4.5rem)}
-  .eyebrow{
-    font-family:'IBM Plex Mono',monospace;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;
-    color:var(--teal);margin-bottom:1.4rem;display:flex;align-items:center;gap:.7rem;
-  }
-  .eyebrow::before{content:"";width:1.8rem;height:1px;background:var(--teal)}
-  h1{
-    font-family:'Fraunces',serif;font-weight:500;
-    font-size:clamp(2.4rem,1.4rem + 4.4vw,4.6rem);
-    line-height:1.02;letter-spacing:-.022em;
-    max-width:16ch;
-  }
-  h1 .tu{font-style:italic;font-weight:600}
-  h1 .name{display:block;color:var(--teal);font-weight:600;margin-top:.15em}
-  .lede{
-    margin-top:1.7rem;max-width:44ch;font-size:clamp(1.12rem,1rem + .5vw,1.35rem);
-    color:var(--ink-soft);line-height:1.55;
-  }
-  .cta-row{margin-top:2.4rem;display:flex;flex-wrap:wrap;gap:.9rem;align-items:center}
-  .btn{
-    font-family:'IBM Plex Mono',monospace;font-size:.82rem;letter-spacing:.02em;
-    text-decoration:none;padding:.85rem 1.4rem;border-radius:2px;
-    display:inline-flex;align-items:center;gap:.5rem;transition:transform .15s, background .2s, box-shadow .2s;
-  }
-  .btn-primary{background:var(--teal);color:var(--paper);box-shadow:0 1px 0 rgba(0,0,0,.12)}
-  .btn-primary:hover{background:var(--teal-bright);transform:translateY(-1px)}
-  .btn-ghost{color:var(--ink);border:1px solid var(--line)}
-  .btn-ghost:hover{border-color:var(--teal);color:var(--teal)}
-  .btn:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
-  .btn .arr{transition:transform .2s}
-  .btn:hover .arr{transform:translateX(3px)}
-
-  /* ---------- SIGNATURE: la ficha de memoria ---------- */
-  .signature{margin-top:clamp(3rem,7vw,5rem)}
-  .sig-label{
-    font-family:'IBM Plex Mono',monospace;font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;
-    color:var(--ink-soft);margin-bottom:1rem;display:flex;align-items:center;gap:.6rem;
-  }
-  .sig-label b{color:var(--teal);font-weight:500}
-  .memcard{
-    border:1px solid var(--line);border-radius:6px;background:linear-gradient(180deg,#fbf8f0,#f4f0e6);
-    padding:clamp(1.3rem,3vw,2rem);position:relative;overflow:hidden;
-    box-shadow:0 1px 2px rgba(28,26,23,.04),0 8px 30px -18px rgba(28,26,23,.25);
-  }
-  .memcard::before{
-    content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--teal);
-  }
-  .mem-turn{padding:.55rem 0;display:grid;grid-template-columns:auto 1fr;gap:.9rem;align-items:start}
-  .mem-turn + .mem-turn{border-top:1px dashed var(--line)}
-  .mem-who{
-    font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;
-    color:var(--ink-soft);padding-top:.28rem;white-space:nowrap;
-  }
-  .mem-who.hermes{color:var(--teal)}
-  .mem-txt{font-size:1.02rem;line-height:1.5}
-  .mem-txt .strike{color:var(--ink-soft);text-decoration:line-through;text-decoration-color:var(--clay);text-decoration-thickness:1.5px}
-  .mem-tag{
-    display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:.64rem;letter-spacing:.06em;
-    text-transform:uppercase;color:var(--clay);border:1px solid color-mix(in srgb,var(--clay) 40%,transparent);
-    border-radius:2px;padding:.08rem .4rem;margin-left:.15rem;vertical-align:middle;
-  }
-  .mem-caption{
-    margin-top:1.1rem;font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--ink-soft);
-    line-height:1.5;
+  :root {
+    --papel: #f4f0e6;
+    --papel-hondo: #ece6d6;
+    --tinta: #23201a;
+    --tinta-suave: #55503f;
+    --petroleo: #1f5c52;
+    --petroleo-claro: #2f7c6f;
+    --sepia: #8a6a3b;
+    --linea: #d6cdb8;
+    --marca-verificado: #1f5c52;
+    --marca-emergente: #9a5b28;
   }
 
-  /* ---------- SECTIONS ---------- */
-  section{padding:clamp(3.2rem,8vw,6rem) 0}
-  .sec-head{display:flex;align-items:baseline;gap:1rem;margin-bottom:2.4rem}
-  .sec-num{
-    font-family:'IBM Plex Mono',monospace;font-size:.8rem;color:var(--teal);letter-spacing:.05em;
-    padding-top:.35rem;flex:none;
-  }
-  h2{
-    font-family:'Fraunces',serif;font-weight:500;letter-spacing:-.018em;line-height:1.08;
-    font-size:clamp(1.8rem,1.2rem + 2.4vw,3rem);max-width:20ch;
-  }
-  .prose{max-width:60ch;font-size:clamp(1.08rem,1rem + .4vw,1.28rem);color:var(--ink-soft);line-height:1.65}
-  .prose + .prose{margin-top:1.1rem}
-  .prose strong{color:var(--ink);font-weight:600}
-  .divider{border:0;border-top:1px solid var(--line);margin:0}
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  /* momento section */
-  .momento{background:var(--ink);color:var(--paper)}
-  .momento .sec-num{color:var(--teal-bright)}
-  .momento h2{color:var(--paper);max-width:24ch}
-  .momento .prose{color:#cdc6b6}
-  .momento .prose strong{color:#fff}
-  .momento .kicker{
-    font-family:'Fraunces',serif;font-style:italic;font-weight:500;
-    font-size:clamp(1.3rem,1rem + 1.4vw,1.9rem);line-height:1.3;color:var(--paper);
-    max-width:30ch;margin-top:1.8rem;padding-left:1.3rem;border-left:3px solid var(--teal-bright);
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--papel);
+    color: var(--tinta);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.19rem;
+    line-height: 1.65;
+    font-optical-sizing: auto;
+    -webkit-font-smoothing: antialiased;
   }
 
-  /* recorrido — steps */
-  .steps{display:grid;gap:1.1rem;margin-top:.5rem}
-  .step{
-    border:1px solid var(--line);border-radius:6px;background:#fbf8f0;
-    padding:clamp(1.3rem,3vw,1.9rem);display:grid;grid-template-columns:auto 1fr auto;
-    gap:clamp(1rem,3vw,2rem);align-items:center;transition:border-color .2s,transform .2s,box-shadow .2s;
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 1.6rem; }
+
+  /* ---- barra superior ---- */
+  .topbar {
+    border-bottom: 1px solid var(--linea);
+    background: var(--papel);
+    position: sticky; top: 0; z-index: 10;
   }
-  .step:hover{border-color:var(--teal);transform:translateY(-2px);box-shadow:0 12px 30px -20px rgba(31,92,82,.5)}
-  .step-n{
-    font-family:'Fraunces',serif;font-weight:900;font-size:clamp(2rem,3vw,2.8rem);
-    color:var(--paper-deep);line-height:1;position:relative;
+  .topbar .wrap {
+    display: flex; align-items: baseline; justify-content: space-between;
+    padding-top: 1rem; padding-bottom: 1rem;
   }
-  .step:hover .step-n{color:var(--teal)}
-  .step-body h3{font-family:'Fraunces',serif;font-weight:600;font-size:1.3rem;letter-spacing:-.01em;margin-bottom:.35rem}
-  .step-body p{font-size:1rem;color:var(--ink-soft);line-height:1.5;max-width:52ch}
-  .step-body .tool{font-family:'IBM Plex Mono',monospace;font-size:.82rem;color:var(--teal);font-style:normal}
-  .step-cta{
-    font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--teal);text-decoration:none;
-    white-space:nowrap;display:inline-flex;gap:.4rem;align-items:center;border-bottom:1px solid transparent;transition:border-color .2s
+  .brand {
+    font-family: 'Fraunces', serif;
+    font-weight: 600; font-size: 1.28rem;
+    letter-spacing: -0.01em; color: var(--tinta);
+    text-decoration: none;
   }
-  .step-cta:hover{border-color:var(--teal)}
-  .step-cta .arr{transition:transform .2s}.step-cta:hover .arr{transform:translateX(3px)}
-  .step-cta:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
-  .commit{
-    font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.05em;text-transform:uppercase;
-    color:var(--ink-soft);margin-top:.5rem;display:flex;gap:.5rem;align-items:center
+  .brand .dot { color: var(--petroleo); }
+  .topnav a {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--tinta-suave); text-decoration: none;
+    border-bottom: 1px solid transparent; padding-bottom: 2px;
+    transition: color .2s, border-color .2s;
   }
-  .commit .dot{width:6px;height:6px;border-radius:50%;background:var(--teal);flex:none}
-  @media(max-width:640px){
-    .step{grid-template-columns:auto 1fr;gap:1rem}
-    .step-cta{grid-column:1 / -1;justify-self:start;margin-top:.3rem}
+  .topnav a:hover { color: var(--petroleo); border-color: var(--petroleo); }
+
+  /* ---- hero ---- */
+  .hero { padding: 5rem 0 3.5rem; }
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.16em;
+    color: var(--petroleo); margin-bottom: 1.6rem;
+  }
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600; font-size: clamp(2.3rem, 6vw, 3.5rem);
+    line-height: 1.08; letter-spacing: -0.02em; color: var(--tinta);
+    margin-bottom: 1.5rem;
+  }
+  h1 em { font-style: italic; color: var(--petroleo); }
+  .hero .lede {
+    font-size: 1.4rem; line-height: 1.5; color: var(--tinta-suave);
+    max-width: 40ch;
   }
 
-  /* como funciona — ciclo */
-  .cycle{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;margin-top:.5rem;counter-reset:c}
-  .cyc{
-    border-top:2px solid var(--teal);padding-top:1.1rem;position:relative;
+  /* ---- secciones ---- */
+  section { padding: 3rem 0; border-top: 1px solid var(--linea); }
+  .sec-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.76rem; letter-spacing: 0.12em; color: var(--sepia);
+    margin-bottom: 0.9rem;
   }
-  .cyc .k{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:.6rem}
-  .cyc h4{font-family:'Fraunces',serif;font-weight:600;font-size:1.25rem;margin-bottom:.4rem;letter-spacing:-.01em}
-  .cyc p{font-size:.98rem;color:var(--ink-soft);line-height:1.5}
-  .cycle-note{
-    margin-top:2rem;font-family:'Fraunces',serif;font-style:italic;font-size:clamp(1.15rem,1rem + .7vw,1.5rem);
-    color:var(--ink);max-width:40ch;line-height:1.4
+  h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600; font-size: clamp(1.7rem, 4vw, 2.15rem);
+    line-height: 1.15; letter-spacing: -0.015em; color: var(--tinta);
+    margin-bottom: 1.3rem; max-width: 24ch;
   }
-  @media(max-width:720px){.cycle{grid-template-columns:1fr;gap:1.6rem}}
+  h2 em { font-style: italic; color: var(--petroleo); }
+  p { margin-bottom: 1.15rem; }
+  p:last-child { margin-bottom: 0; }
+  .lead-in { color: var(--tinta-suave); }
+  strong { font-weight: 600; color: var(--tinta); }
+  em.term { font-style: italic; color: var(--petroleo); font-weight: 500; }
 
-  /* cierre */
-  .close{text-align:center;padding:clamp(4rem,10vw,7rem) 0}
-  .close h2{margin:0 auto 2rem;max-width:22ch}
-  .close .cta-row{justify-content:center}
+  /* frase-ancla destacada */
+  .ancla {
+    font-family: 'Fraunces', serif;
+    font-weight: 500; font-style: italic;
+    font-size: clamp(1.5rem, 3.6vw, 1.95rem);
+    line-height: 1.28; color: var(--petroleo);
+    letter-spacing: -0.01em;
+    padding: 0.4rem 0 0.4rem 1.5rem;
+    border-left: 3px solid var(--petroleo);
+    margin: 0.5rem 0 1.8rem;
+  }
 
-  footer{border-top:1px solid var(--line);padding:2.5rem 0;font-family:'IBM Plex Mono',monospace;font-size:.76rem;color:var(--ink-soft)}
-  .foot-inner{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;align-items:center}
-  footer a{color:var(--ink-soft);text-decoration:none;border-bottom:1px solid transparent;transition:.2s}
-  footer a:hover{color:var(--teal);border-color:var(--teal)}
+  /* distinción validado / emergente */
+  .par { display: grid; grid-template-columns: 1fr; gap: 1rem; margin: 1.6rem 0; }
+  @media (min-width: 620px) { .par { grid-template-columns: 1fr 1fr; gap: 1.4rem; } }
+  .par .card {
+    background: var(--papel-hondo);
+    border: 1px solid var(--linea);
+    border-radius: 3px;
+    padding: 1.3rem 1.35rem;
+  }
+  .par .card h3 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.06em;
+    margin-bottom: 0.7rem; font-weight: 500;
+  }
+  .par .card.validado h3 { color: var(--marca-verificado); }
+  .par .card.emergente h3 { color: var(--marca-emergente); }
+  .par .card p { font-size: 1.02rem; line-height: 1.55; color: var(--tinta-suave); margin: 0; }
 
-  /* reveal on scroll */
-  .reveal{opacity:0;transform:translateY(14px);transition:opacity .7s ease,transform .7s ease}
-  .reveal.in{opacity:1;transform:none}
+  /* componentes */
+  .comp { margin-top: 1.6rem; }
+  .comp-item {
+    padding: 1.2rem 0; border-top: 1px solid var(--linea);
+    display: grid; grid-template-columns: 1fr; gap: 0.3rem;
+  }
+  @media (min-width: 620px) {
+    .comp-item { grid-template-columns: 8.5rem 1fr; gap: 1.4rem; }
+  }
+  .comp-item:last-child { border-bottom: 1px solid var(--linea); }
+  .comp-item .nombre {
+    font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.08rem;
+    color: var(--petroleo); line-height: 1.3;
+  }
+  .comp-item .desc { font-size: 1.02rem; line-height: 1.55; color: var(--tinta-suave); }
+
+  /* recorrido */
+  .pasos { margin-top: 1.6rem; counter-reset: paso; }
+  .paso {
+    display: flex; gap: 1.1rem; align-items: baseline;
+    padding: 1rem 0; border-top: 1px dashed var(--linea);
+  }
+  .paso:first-child { border-top: none; }
+  .paso::before {
+    counter-increment: paso; content: counter(paso);
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.9rem;
+    color: var(--papel); background: var(--petroleo);
+    width: 1.7rem; height: 1.7rem; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-weight: 500;
+  }
+  .paso .txt strong { display: block; font-family: 'Fraunces', serif; font-size: 1.1rem; margin-bottom: 0.15rem; }
+  .paso .txt span { color: var(--tinta-suave); font-size: 1.02rem; }
+
+  /* puerta a el proyecto */
+  .puerta {
+    background: var(--tinta); color: var(--papel);
+    border-radius: 4px; padding: 2.4rem 2rem; margin-top: 1rem;
+    text-align: center;
+  }
+  .puerta h2 { color: var(--papel); margin: 0 auto 1rem; }
+  .puerta p { color: #c9c2b0; max-width: 46ch; margin: 0 auto 1.7rem; }
+  .puerta .btn {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--papel); text-decoration: none;
+    border: 1px solid var(--petroleo-claro);
+    background: var(--petroleo);
+    padding: 0.75rem 1.5rem; border-radius: 3px;
+    transition: background .2s, transform .1s;
+  }
+  .puerta .btn:hover { background: var(--petroleo-claro); }
+
+  /* nota honesta */
+  .nota {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.82rem; line-height: 1.6; color: var(--tinta-suave);
+    background: var(--papel-hondo); border-left: 2px solid var(--sepia);
+    padding: 0.9rem 1.1rem; margin: 1.5rem 0 0; border-radius: 0 3px 3px 0;
+  }
+
+  /* footer */
+  footer {
+    border-top: 1px solid var(--linea); padding: 2.5rem 0 3.5rem;
+    color: var(--tinta-suave);
+  }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; align-items: baseline; }
+  footer .fnote { font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem; letter-spacing: 0.04em; }
+  footer a { color: var(--petroleo); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  ::selection { background: var(--petroleo); color: var(--papel); }
+
+  a:focus-visible, .btn:focus-visible { outline: 2px solid var(--petroleo); outline-offset: 3px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; }
+  }
 </style>
 </head>
 <body>
 
-<nav>
-  <div class="wrap nav-inner">
-    <a href="#top" class="brand"><span class="mark">H</span>Hermes-Colega</a>
-    <div class="nav-links">
-      <a href="#recorrido" class="hide-sm">Cómo empezar</a>
-      <a href="proyecto.html" class="hide-sm">El proyecto</a>
-      <a href="https://github.com/mcanno/hercolega" target="_blank" rel="noopener">GitHub ↗</a>
+<div class="topbar">
+  <div class="wrap">
+    <a href="index.html" class="brand">Hercolega<span class="dot">.</span></a>
+    <nav class="topnav"><a href="proyecto.html">El proyecto</a></nav>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Emprender en la era de la IA</div>
+    <h1>Nunca hubo mejor momento para emprender. Si entiendes que las reglas <em>cambian bajo tus pies</em>.</h1>
+    <p class="lede">Emprender hoy es hacerlo con conocimiento y con la IA bien apoyada. No como un oráculo que decide por ti — como un colega que conoce tu historia y te ayuda a mejorarla.</p>
+  </div>
+</header>
+
+<main>
+
+<section id="contexto">
+  <div class="wrap">
+    <div class="sec-num">01 — El contexto nuevo</div>
+    <h2>La IA no es una herramienta más. Es un cambio de terreno.</h2>
+    <p>La IA no se añade sin más a lo que ya sabías. Es un cambio de contexto que acelera la caducidad del conocimiento. Procedimientos que funcionaban hace un año empiezan a quedar obsoletos. Formas de organizarse, de vender, de construir producto, que eran buenas prácticas, hoy se reescriben.</p>
+    <p>Emprender siempre fue avanzar sobre terreno incierto. Ahora, además, el terreno se mueve mientras caminas.</p>
+  </div>
+</section>
+
+<section id="distincion">
+  <div class="wrap">
+    <div class="sec-num">02 — La distinción que salva</div>
+    <h2>No todo caduca. La clave es saber qué resiste y qué se está formando.</h2>
+    <p>Bajo el ruido del cambio hay conocimiento que no caduca: los fundamentos de cómo se descubre a un cliente, cómo se diseña un experimento, qué hace defendible a una empresa. Es el suelo firme.</p>
+    <div class="par">
+      <div class="card validado">
+        <h3>Conocimiento validado</h3>
+        <p>Asentado por décadas de práctica. Resiste el cambio. Es la roca sobre la que se pisa con confianza.</p>
+      </div>
+      <div class="card emergente">
+        <h3>Conocimiento emergente</h3>
+        <p>Real y valioso, pero todavía en formación. Cómo se emprende en un mundo de IA. Tentativo, cambiante, aún sin asentar.</p>
+      </div>
+    </div>
+    <p>El error más caro es tratarlos igual: apoyarte en lo emergente como si fuera firme, o descartar lo firme por parecer viejo. Emprender bien hoy es, sobre todo, saber sobre qué pisas.</p>
+  </div>
+</section>
+
+<section id="ia">
+  <div class="wrap">
+    <div class="sec-num">03 — El papel de la IA</div>
+    <h2>No debería darte todo con la misma confianza. Debería ayudarte a saber <em>de qué fiarte</em>.</h2>
+    <p>Una IA generalista te responde cualquier cosa con el mismo tono seguro. Lo validado y lo tentativo suenan igual de convincentes — y ahí está el peligro, porque no puedes distinguir el consejo probado del que alguien improvisó el mes pasado.</p>
+    <p>La IA bien usada hace lo contrario: te marca lo que sabe de lo que no. Te dice <em class="term">esto está validado, apóyate con confianza</em> y <em class="term">esto es emergente, tómalo como hipótesis y valídalo con tu experiencia</em>. No te da certezas falsas; te da un mapa honesto del conocimiento, con sus zonas firmes y sus zonas en construcción.</p>
+    <p>En un mundo donde el conocimiento caduca rápido, esa honestidad no es un lujo. Es la única forma de no construir sobre arena.</p>
+  </div>
+</section>
+
+<section id="colega">
+  <div class="wrap">
+    <div class="sec-num">04 — El colega</div>
+    <h2>No un oráculo que decide por ti. Un colega que te da visión donde tu vista no llega.</h2>
+    <p>Hay dos formas de apoyarse en la IA. Una es convertirla en oráculo: <em>"dime qué hago"</em> — y acabas dependiente, ejecutando decisiones que no entiendes del todo. La otra es tratarla como un colega: alguien que ve lo que tú no alcanzas desde donde estás, y te lo muestra, para que decidas tú.</p>
+    <p>Un buen colega no juzga en tu lugar. Amplía tu campo de visión — te trae el conocimiento que resiste, te señala lo que emerge, recuerda el camino que ya has recorrido — y con todo eso sobre la mesa, la decisión sigue siendo tuya. Mejor informada, más lúcida, pero tuya.</p>
+
+    <p class="ancla">Un colega que conoce tu historia y te ayuda a mejorarla.</p>
+
+    <p>Esa es, en una frase, la clase de colega que perseguimos. No un experto que te conoce por primera vez cada vez que preguntas, sino uno que recuerda tu camino — qué intentaste, qué funcionó, qué falló, dónde estás — y que, con esa historia presente, te ayuda a escribir los siguientes capítulos mejor. La historia es tuya; el colega te acompaña a mejorarla.</p>
+    <p>Y ese colega no se queda quieto, en dos sentidos:</p>
+    <p><strong>Crece contigo hacia nuevas fronteras.</strong> Hoy es experto en construir tu empresa. Pero el conocimiento que importa no deja de aparecer: mañana esa frontera puede ser cómo operar sobre los sistemas operativos de inteligencia artificial, o cómo innovar cuando las reglas se reescriben cada temporada — ejemplos de lo que muy probablemente emerja pronto. El colega evoluciona hacia esos dominios a medida que surgen, persiguiendo la frontera del conocimiento en vez de anclarse a lo de ayer.</p>
+    <p><strong>No está solo: es parte de un equipo.</strong> Igual que un fundador se rodea de asesores —uno de ventas, uno de operaciones, uno legal—, tu agente personal orquesta a un equipo de colegas especialistas. El de emprendimiento es uno de ellos; tu agente es quien sabe a cuál acudir para cada cosa. El colega de hoy es la primera pieza de ese equipo.</p>
+    <p>Un colega que conoce tu historia, crece con ella hacia lo que viene, y se apoya en un equipo de especialistas — todo orquestado por tu agente de confianza, y con la decisión siempre en tus manos.</p>
+  </div>
+</section>
+
+<section id="respuesta">
+  <div class="wrap">
+    <div class="sec-num">05 — La respuesta construida</div>
+    <h2>Esto es lo que hemos construido para que ese colega exista de verdad.</h2>
+    <p class="lead-in">Hasta aquí, una convicción sobre cómo emprender hoy. Lo que sigue es cómo la hacemos real.</p>
+    <p>Hemos construido un conocimiento especializado en emprendimiento — no un chatbot genérico, sino un sistema que distingue explícitamente lo validado de lo emergente, que cita sus fuentes, y que se organiza en especialistas para cada fase y desafío de una startup: desde la ideación y el encaje producto-mercado hasta el escalado, las plataformas, las operaciones y la gobernanza.</p>
+    <p>Y ese conocimiento no vive aislado: se conecta a tu propio asistente de IA personal — el que tú elijas, en tu entorno, bajo tu control — para que te acompañe con método y con memoria de tu startup. El conocimiento experto, en el colega que ya usas.</p>
+
+    <div class="comp">
+      <div class="comp-item">
+        <div class="nombre">El conocimiento central</div>
+        <div class="desc">Un servicio especializado que aplica metodologías de emprendimiento y distingue el conocimiento validado del emergente. El saber que no depende de ninguna startup en particular — compartido, y honesto sobre su propia certeza.</div>
+      </div>
+      <div class="comp-item">
+        <div class="nombre">Tu agente personal</div>
+        <div class="desc">El asistente de IA que instalas en tu entorno, un producto abierto, tuyo, bajo tu control. Aporta la conversación, la memoria de tu startup y la privacidad: tus datos se quedan donde tú decides.</div>
+      </div>
+      <div class="comp-item">
+        <div class="nombre">La conexión abierta</div>
+        <div class="desc">El conocimiento se conecta a tu agente por un estándar abierto, no por un candado propietario. No dependes de nosotros: tu agente podría ser cualquiera que hable ese estándar.</div>
+      </div>
+      <div class="comp-item">
+        <div class="nombre">La memoria de tu camino</div>
+        <div class="desc">Tu agente recuerda lo que has intentado, lo que funcionó y lo que no. Cada consejo llega informado por tu historia, no en el vacío.</div>
+      </div>
     </div>
   </div>
-</nav>
+</section>
 
-<main id="top">
-
-  <!-- HERO -->
-  <header class="hero">
-    <div class="wrap">
-      <p class="eyebrow reveal">Startup nativa de IA</p>
-      <h1 class="reveal">El colega especializado que necesitas en <span class="tu">TU</span> startup<span class="name">Hermes-Colega</span></h1>
-      <p class="lede reveal">Un colega de IA que aprende de tu emprendimiento, recuerda por dónde vas y te ayuda a decidir qué hacer a continuación — con conocimiento validado y con lo que ya sabe de ti.</p>
-      <div class="cta-row reveal">
-        <a href="#recorrido" class="btn btn-primary">Empieza gratis, sin instalar nada <span class="arr">→</span></a>
-        <a href="#como" class="btn btn-ghost">Cómo funciona</a>
-      </div>
-
-      <!-- SIGNATURE: ficha de memoria — el ciclo que recuerda -->
-      <div class="signature reveal">
-        <p class="sig-label"><b>◆</b> Lo que un colega hace y un buscador no: <b>recordar</b></p>
-        <div class="memcard">
-          <div class="mem-turn">
-            <span class="mem-who hermes">Hermes · lun</span>
-            <span class="mem-txt">«Antes de escalar, diagnostica en qué fase de poder está tu startup.»</span>
-          </div>
-          <div class="mem-turn">
-            <span class="mem-who">Tú · jue</span>
-            <span class="mem-txt">«Lo intenté, el diagnóstico no me sirvió.» <span class="mem-tag">hipótesis falseada</span></span>
-          </div>
-          <div class="mem-turn">
-            <span class="mem-who hermes">Hermes · jue</span>
-            <span class="mem-txt"><span class="strike">Vuelve a diagnosticar la fase.</span> «Dejemos eso. Vayamos directo a los costes de cambio y el recurso que ya controlas.»</span>
-          </div>
-          <p class="mem-caption">Misma pregunta, semana distinta. La segunda respuesta cambió porque Hermes recordó que la primera no funcionó. Un buscador te habría repetido lo mismo.</p>
-        </div>
-      </div>
+<section id="empezar">
+  <div class="wrap">
+    <div class="sec-num">06 — Cómo empezar</div>
+    <h2>Tres pasos, a tu ritmo.</h2>
+    <div class="pasos">
+      <a class="paso" href="https://startup-advisor-sand.vercel.app/" target="_blank" rel="noopener"><div class="txt"><strong>Explora tu situación</strong><span>Un diagnóstico inicial de dónde está tu startup ahora mismo.</span></div></a>
+      <a class="paso" href="https://startup-next-ui.vercel.app" target="_blank" rel="noopener"><div class="txt"><strong>Consulta el conocimiento</strong><span>Prueba las recomendaciones del sistema para tu próximo paso.</span></div></a>
+      <a class="paso" href="https://github.com/mcanno/hercolega/blob/main/docs/diseno-servidor-mcp.md" target="_blank" rel="noopener"><div class="txt"><strong>Instala tu colega</strong><span>Conecta el conocimiento a tu propio agente de IA y empieza a trabajar con él.</span></div></a>
     </div>
-  </header>
+    <p class="nota">Nota honesta: hoy hay un colega construido y funcionando —el de emprendimiento—. El equipo de colegas y su evolución hacia nuevos dominios son la dirección hacia la que crece el proyecto, no una promesa ya cumplida.</p>
+  </div>
+</section>
 
-  <hr class="divider">
-
-  <!-- EL PROBLEMA -->
-  <section id="problema">
-    <div class="wrap">
-      <div class="sec-head">
-        <span class="sec-num">01</span>
-        <h2>Emprender es decidir a ciegas</h2>
-      </div>
-      <p class="prose reveal">Cada decisión de una startup se toma con información incompleta. El consejo genérico —el de los libros, el de los chatbots— no conoce tu caso: tu segmento, tus clientes, lo que ya probaste y no funcionó. Y un consultor que sí te conoce cuesta lo que una startup temprana no tiene.</p>
-      <p class="prose reveal"><strong>Hermes-Colega junta las dos cosas:</strong> el conocimiento validado sobre cómo se construye una startup, y el conocimiento de la tuya en concreto.</p>
+<section id="puerta">
+  <div class="wrap">
+    <div class="puerta">
+      <h2>¿Quieres ver cómo está construido de verdad?</h2>
+      <p>Todo lo anterior es la promesa. Si te interesa el cómo — la arquitectura, las decisiones de ingeniería, qué está probado y qué es horizonte —, lo hemos documentado con detalle.</p>
+      <a href="proyecto.html" class="btn">El proyecto →</a>
     </div>
-  </section>
-
-  <!-- EL MOMENTO -->
-  <section class="momento" id="momento">
-    <div class="wrap">
-      <div class="sec-head">
-        <span class="sec-num">02</span>
-        <h2>Nunca hubo mejor momento para emprender</h2>
-      </div>
-      <p class="prose reveal">…si entiendes y te apoyas bien en la IA. La IA ha cambiado las reglas. Lo que antes exigía un equipo y meses de trabajo, hoy lo puede hacer un fundador con las herramientas adecuadas. Pero el apalancamiento no viene de usar IA de vez en cuando: viene de <strong>entenderla y utilizarla de forma inteligente</strong>.</p>
-      <p class="prose reveal">En esta nueva etapa, el criterio vale más que la antigüedad, y el control sobre tu propio camino vale más que cualquier atajo. La ventaja no es una herramienta más en tu stack —es un colega que domina muchas herramientas y conoce tu startup como nadie, porque ha estado contigo desde el principio y te entiende.</p>
-      <p class="kicker reveal">Cuanto más trabajas con tu Hermes, más se especializa en TU startup. Deja de ser una herramienta ocasional y se convierte en tu colega inseparable — el primer signo de una startup nativa de IA.</p>
-    </div>
-  </section>
-
-  <!-- RECORRIDO -->
-  <section id="recorrido">
-    <div class="wrap">
-      <div class="sec-head">
-        <span class="sec-num">03</span>
-        <h2>Empieza donde quieras. Avanza cuando quieras.</h2>
-      </div>
-      <div class="steps">
-
-        <div class="step reveal">
-          <div class="step-n">1</div>
-          <div class="step-body">
-            <h3>Conoce tu situación</h3>
-            <p>Responde unas preguntas y obtén un informe de en qué punto está tu emprendimiento, con criterio metodológico real. <span class="tool">startup-advisor</span> · por web, gratis, sin instalar nada.</p>
-            <div class="commit"><span class="dot"></span> Sin compromiso</div>
-          </div>
-          <a href="#" class="step-cta" data-tool="advisor">Probar <span class="arr">→</span></a>
-        </div>
-
-        <div class="step reveal">
-          <div class="step-n">2</div>
-          <div class="step-body">
-            <h3>Descubre tu próxima acción</h3>
-            <p>Dale tu situación y te dirá cuál es la actividad más relevante para avanzar ahora, apoyada en seis especialistas de dominio. <span class="tool">startup-next</span> · por web.</p>
-            <div class="commit"><span class="dot"></span> Sin compromiso</div>
-          </div>
-          <a href="#" class="step-cta" data-tool="next">Probar <span class="arr">→</span></a>
-        </div>
-
-        <div class="step reveal">
-          <div class="step-n">3</div>
-          <div class="step-body">
-            <h3>Ten tu propio colega</h3>
-            <p>Instala tu instancia privada de <span class="tool">Hermes</span>: recuerda tu historia, aprende de cada resultado y adapta su consejo a tu startup. Tuya, en tu entorno, bajo tu control.</p>
-            <div class="commit"><span class="dot"></span> Tu infraestructura · Docker o local</div>
-          </div>
-          <a href="#" class="step-cta" data-tool="hermes">Próximamente <span class="arr">→</span></a>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <hr class="divider">
-
-  <!-- COMO FUNCIONA -->
-  <section id="como">
-    <div class="wrap">
-      <div class="sec-head">
-        <span class="sec-num">04</span>
-        <h2>Aprende de tu startup, no solo de los libros</h2>
-      </div>
-      <div class="cycle">
-        <div class="cyc reveal">
-          <div class="k">Paso uno</div>
-          <h4>Te aconseja</h4>
-          <p>Con conocimiento validado y con lo que ya sabe de ti. No consejo genérico: consejo situado en tu caso.</p>
-        </div>
-        <div class="cyc reveal">
-          <div class="k">Paso dos</div>
-          <h4>Tú decides y actúas</h4>
-          <p>La decisión siempre es tuya. Hermes aporta criterio y argumentos; el juicio —y la responsabilidad— es del fundador.</p>
-        </div>
-        <div class="cyc reveal">
-          <div class="k">Paso tres</div>
-          <h4>Aprende del resultado</h4>
-          <p>Le cuentas cómo fue, lo recuerda, y su próximo consejo ya lo tiene en cuenta. El ciclo se cierra y vuelve a empezar.</p>
-        </div>
-      </div>
-      <p class="cycle-note reveal">Ese ciclo es la diferencia entre un colega que te acompaña y un buscador que repite lo mismo cada vez.</p>
-    </div>
-  </section>
-
-  <!-- CIERRE -->
-  <section class="close" id="empezar">
-    <div class="wrap">
-      <div class="sec-head" style="justify-content:center">
-        <h2>Tu startup es única.<br>Tu colega también debería serlo.</h2>
-      </div>
-      <div class="cta-row">
-        <a href="#recorrido" class="btn btn-primary">Empieza gratis <span class="arr">→</span></a>
-        <a href="https://github.com/mcanno/hercolega" target="_blank" rel="noopener" class="btn btn-ghost">Ver el proyecto en GitHub ↗</a>
-      </div>
-    </div>
-  </section>
+  </div>
+</section>
 
 </main>
 
 <footer>
-  <div class="wrap foot-inner">
-    <span>Hermes-Colega · un proyecto sobre emprender en la era de la IA</span>
-    <span><a href="proyecto.html">El proyecto</a> · <a href="https://github.com/mcanno/hercolega" target="_blank" rel="noopener">GitHub</a></span>
+  <div class="wrap">
+    <div class="fnote">Hercolega — emprender con conocimiento y con un colega de IA</div>
+    <div class="fnote"><a href="proyecto.html">El proyecto</a></div>
   </div>
 </footer>
 
-<script>
-  // Reveal on scroll
-  const io=new IntersectionObserver((es)=>{
-    es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})
-  },{threshold:.12,rootMargin:'0px 0px -8% 0px'});
-  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-
-  // Placeholders para los enlaces de herramientas (se conectan a las URLs reales al desplegar)
-  const TOOLS={
-    advisor:'https://startup-advisor-sand.vercel.app/',
-    next:'https://startup-next-ui.vercel.app',
-    hermes:'#'     // TODO: sección de instrucciones de instalación de Hermes (Docker aún no empaquetado)
-  };
-  document.querySelectorAll('[data-tool]').forEach(a=>{
-    const t=a.getAttribute('data-tool');
-    if(TOOLS[t] && TOOLS[t]!=='#'){a.setAttribute('href',TOOLS[t]);a.setAttribute('target','_blank');a.setAttribute('rel','noopener')}
-    else{a.addEventListener('click',ev=>{ev.preventDefault();a.querySelector('.arr').textContent='· pendiente de enlazar';setTimeout(()=>a.querySelector('.arr').textContent='→',1600)})}
-  });
-</script>
 </body>
 </html>

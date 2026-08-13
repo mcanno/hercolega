@@ -3,238 +3,403 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>El proyecto — Hermes-Colega</title>
-<meta name="description" content="La tesis técnica de Hermes-Colega: dos naturalezas de conocimiento, dos especializaciones que se encuentran, y un ciclo que mantiene el consejo vivo.">
+<title>El proyecto — Hercolega · Un arnés de IA agéntica para el emprendimiento</title>
+<meta name="description" content="Cómo está construido Hercolega: la arquitectura, las decisiones de ingeniería, qué está probado y qué es horizonte. Contado como recorrido, con honestidad sobre su propia madurez.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,900&family=Newsreader:ital,opsz@0,6..72;1,6..72&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --ink:#1c1a17;--ink-soft:#4a4640;--paper:#f4f0e6;--paper-deep:#eae4d4;
-    --teal:#1f5c52;--teal-bright:#2f7d6e;--clay:#b8613a;--line:#d8d0bd;--focus:#2f7d6e;
+  :root {
+    --papel: #f4f0e6;
+    --papel-hondo: #ece6d6;
+    --tinta: #23201a;
+    --tinta-suave: #55503f;
+    --petroleo: #1f5c52;
+    --petroleo-claro: #2f7c6f;
+    --sepia: #8a6a3b;
+    --linea: #d6cdb8;
+
+    /* estados del arnés */
+    --e-construido: #1f5c52;
+    --e-construido-bg: #e4ede9;
+    --e-parcial: #7a6a1f;
+    --e-parcial-bg: #ede9d6;
+    --e-delegado: #3f5a7a;
+    --e-delegado-bg: #e2e7ee;
+    --e-disenado: #8a6a3b;
+    --e-disenado-bg: #ede4d3;
+    --e-horizonte: #6a5a52;
+    --e-horizonte-bg: #e8e2d8;
   }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{background:var(--paper);color:var(--ink);font-family:'Newsreader',Georgia,serif;
-    font-size:clamp(1.05rem,0.9rem + 0.5vw,1.2rem);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
-  ::selection{background:var(--teal);color:var(--paper)}
-  .wrap{max-width:760px;margin:0 auto;padding:0 clamp(1.2rem,4vw,2rem)}
-  .wide{max-width:1080px}
 
-  nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--paper) 88%,transparent);
-    backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:.85rem 0}
-  .brand{font-family:'Fraunces',serif;font-weight:600;font-size:1.15rem;letter-spacing:-.01em;
-    display:flex;align-items:center;gap:.55rem;text-decoration:none;color:var(--ink)}
-  .brand .mark{width:1.55rem;height:1.55rem;border-radius:50%;background:var(--teal);color:var(--paper);
-    display:grid;place-items:center;font-family:'Fraunces',serif;font-weight:900;font-size:.95rem;flex:none}
-  .nav-links{display:flex;gap:1.6rem;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:.8rem;letter-spacing:.02em}
-  .nav-links a{text-decoration:none;color:var(--ink-soft);transition:color .2s}
-  .nav-links a:hover{color:var(--teal)}
-  .nav-links a:focus-visible{outline:2px solid var(--focus);outline-offset:3px;border-radius:2px}
-  .nav-links a.active{color:var(--teal)}
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--papel); color: var(--tinta);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.19rem; line-height: 1.65;
+    font-optical-sizing: auto; -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 1.6rem; }
 
-  header.top{padding:clamp(3rem,8vw,5.5rem) 0 clamp(1.5rem,4vw,2.5rem)}
-  .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;
-    color:var(--teal);margin-bottom:1.3rem;display:flex;align-items:center;gap:.7rem}
-  .eyebrow::before{content:"";width:1.8rem;height:1px;background:var(--teal)}
-  h1{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(2.1rem,1.4rem + 3vw,3.6rem);
-    line-height:1.04;letter-spacing:-.02em;max-width:18ch}
-  .standfirst{margin-top:1.5rem;font-size:clamp(1.15rem,1rem + .6vw,1.4rem);color:var(--ink-soft);
-    line-height:1.55;max-width:52ch;font-style:italic}
+  .topbar {
+    border-bottom: 1px solid var(--linea); background: var(--papel);
+    position: sticky; top: 0; z-index: 10;
+  }
+  .topbar .wrap {
+    display: flex; align-items: baseline; justify-content: space-between;
+    padding-top: 1rem; padding-bottom: 1rem;
+  }
+  .brand {
+    font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.28rem;
+    letter-spacing: -0.01em; color: var(--tinta); text-decoration: none;
+  }
+  .brand .dot { color: var(--petroleo); }
+  .topnav a {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--tinta-suave); text-decoration: none;
+    border-bottom: 1px solid transparent; padding-bottom: 2px;
+    transition: color .2s, border-color .2s;
+  }
+  .topnav a:hover { color: var(--petroleo); border-color: var(--petroleo); }
 
-  main section{padding:clamp(2rem,5vw,3rem) 0}
-  h2{font-family:'Fraunces',serif;font-weight:600;letter-spacing:-.015em;line-height:1.12;
-    font-size:clamp(1.5rem,1.1rem + 1.8vw,2.2rem);margin-bottom:1.1rem;max-width:24ch}
-  h2 .n{font-family:'IBM Plex Mono',monospace;font-size:.62em;font-weight:400;color:var(--teal);margin-right:.6rem;vertical-align:.15em}
-  p{margin-bottom:1.1rem;color:var(--ink-soft)}
-  p strong{color:var(--ink);font-weight:600}
-  em{font-style:italic}
-  .lead-in{color:var(--ink);font-size:1.1em}
+  .hero { padding: 4.5rem 0 3rem; }
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem;
+    text-transform: uppercase; letter-spacing: 0.16em;
+    color: var(--petroleo); margin-bottom: 1.5rem;
+  }
+  h1 {
+    font-family: 'Fraunces', serif; font-weight: 600;
+    font-size: clamp(2.1rem, 5.2vw, 3rem); line-height: 1.1;
+    letter-spacing: -0.02em; margin-bottom: 1.4rem;
+  }
+  h1 em { font-style: italic; color: var(--petroleo); }
+  .hero .lede { font-size: 1.3rem; line-height: 1.5; color: var(--tinta-suave); max-width: 46ch; }
 
-  .divider{border:0;border-top:1px solid var(--line);margin:1rem 0}
+  section { padding: 3rem 0; border-top: 1px solid var(--linea); }
+  .sec-num {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem;
+    letter-spacing: 0.12em; color: var(--sepia); margin-bottom: 0.9rem;
+  }
+  h2 {
+    font-family: 'Fraunces', serif; font-weight: 600;
+    font-size: clamp(1.6rem, 3.8vw, 2.05rem); line-height: 1.18;
+    letter-spacing: -0.015em; margin-bottom: 1.3rem; max-width: 26ch;
+  }
+  h2 em { font-style: italic; color: var(--petroleo); }
+  p { margin-bottom: 1.15rem; }
+  p:last-child { margin-bottom: 0; }
+  strong { font-weight: 600; }
+  .lead-in { color: var(--tinta-suave); }
+  em.term { font-style: italic; color: var(--petroleo); font-weight: 500; }
 
-  /* pull quote / thesis */
-  .thesis{font-family:'Fraunces',serif;font-style:italic;font-weight:500;
-    font-size:clamp(1.3rem,1.05rem + 1.1vw,1.75rem);line-height:1.35;color:var(--ink);
-    padding:.3rem 0 .3rem 1.4rem;border-left:3px solid var(--teal);margin:1.6rem 0}
+  .dupla { display: grid; grid-template-columns: 1fr; gap: 1rem; margin: 1.6rem 0; }
+  @media (min-width: 640px) { .dupla { grid-template-columns: 1fr 1fr; gap: 1.3rem; } }
+  .dupla .card {
+    background: var(--papel-hondo); border: 1px solid var(--linea);
+    border-radius: 3px; padding: 1.25rem 1.3rem;
+  }
+  .dupla .card h3 {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem;
+    text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.6rem;
+    font-weight: 600; color: var(--petroleo);
+  }
+  .dupla .card p { font-size: 1rem; line-height: 1.55; color: var(--tinta-suave); margin: 0; }
 
-  /* two-nature comparison */
-  .duo{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;margin:1.6rem 0}
-  .card{border:1px solid var(--line);border-radius:6px;background:#fbf8f0;padding:1.3rem 1.4rem}
-  .card h3{font-family:'IBM Plex Mono',monospace;font-size:.76rem;letter-spacing:.08em;text-transform:uppercase;
-    color:var(--teal);margin-bottom:.7rem}
-  .card .big{font-family:'Fraunces',serif;font-weight:600;font-size:1.25rem;line-height:1.2;margin-bottom:.6rem;color:var(--ink);letter-spacing:-.01em}
-  .card p{font-size:.98rem;margin-bottom:.6rem}
-  .card p:last-child{margin-bottom:0}
-  .card .tag{font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:var(--ink-soft)}
-  @media(max-width:640px){.duo{grid-template-columns:1fr}}
+  /* lista de especialistas */
+  .esp-list {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.9rem;
+    color: var(--petroleo); background: var(--papel-hondo);
+    border: 1px solid var(--linea); border-radius: 3px;
+    padding: 1rem 1.2rem; margin: 1.4rem 0; line-height: 1.9;
+    letter-spacing: 0.01em;
+  }
 
-  /* verified / emerging inline chips */
-  .chip{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:.05em;
-    text-transform:uppercase;border-radius:2px;padding:.1rem .45rem;vertical-align:middle}
-  .chip.ver{color:var(--teal);border:1px solid color-mix(in srgb,var(--teal) 45%,transparent)}
-  .chip.eme{color:var(--clay);border:1px solid color-mix(in srgb,var(--clay) 45%,transparent)}
+  /* ---- TABLA DEL ARNÉS (la pieza central) ---- */
+  .arnes { margin: 1.8rem 0 0.5rem; }
+  .arnes-row {
+    display: grid; grid-template-columns: 1fr; gap: 0.5rem;
+    padding: 1.15rem 0; border-top: 1px solid var(--linea);
+  }
+  @media (min-width: 680px) {
+    .arnes-row { grid-template-columns: 12rem 8.5rem 1fr; gap: 1.3rem; align-items: start; }
+  }
+  .arnes-row:last-child { border-bottom: 1px solid var(--linea); }
+  .arnes-row .comp {
+    font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.08rem;
+    color: var(--tinta); line-height: 1.3;
+  }
+  .arnes-row .desc { font-size: 1rem; line-height: 1.5; color: var(--tinta-suave); }
+  .estado {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem;
+    text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;
+    padding: 0.28rem 0.6rem; border-radius: 3px; white-space: nowrap;
+    height: fit-content;
+  }
+  .estado::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+  .estado.construido { color: var(--e-construido); background: var(--e-construido-bg); }
+  .estado.parcial    { color: var(--e-parcial);    background: var(--e-parcial-bg); }
+  .estado.delegado   { color: var(--e-delegado);   background: var(--e-delegado-bg); }
+  .estado.disenado   { color: var(--e-disenado);   background: var(--e-disenado-bg); }
+  .estado.horizonte  { color: var(--e-horizonte);  background: var(--e-horizonte-bg); }
 
-  /* doc links */
-  .docs{border-top:1px solid var(--line);margin-top:1rem;padding-top:1.6rem}
-  .docs h2{margin-bottom:1.2rem}
-  .doclist{display:grid;gap:.2rem}
-  .doclink{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;
-    padding:.7rem 0;border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink);transition:padding .2s}
-  .doclink:hover{padding-left:.4rem}
-  .doclink:hover .dt{color:var(--teal)}
-  .doclink:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
-  .dt{font-family:'Fraunces',serif;font-weight:500;font-size:1.05rem;transition:color .2s}
-  .dd{font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--ink-soft);white-space:nowrap}
+  .leyenda {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem;
+    color: var(--tinta-suave); margin-top: 1.2rem; line-height: 1.9;
+  }
+  .leyenda span { display: inline-block; margin-right: 1.2rem; white-space: nowrap; }
+  .leyenda b { font-weight: 600; }
 
-  footer{border-top:1px solid var(--line);padding:2.5rem 0;margin-top:2rem;
-    font-family:'IBM Plex Mono',monospace;font-size:.76rem;color:var(--ink-soft)}
-  .foot-inner{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;align-items:center}
-  footer a{color:var(--ink-soft);text-decoration:none;border-bottom:1px solid transparent;transition:.2s}
-  footer a:hover{color:var(--teal);border-color:var(--teal)}
+  .cierre-sec {
+    font-style: italic; color: var(--tinta-suave);
+    border-left: 3px solid var(--sepia); padding-left: 1.2rem; margin-top: 1.6rem;
+  }
 
-  .backlink{font-family:'IBM Plex Mono',monospace;font-size:.8rem;color:var(--teal);text-decoration:none;
-    display:inline-flex;align-items:center;gap:.5rem;margin-top:2.5rem}
-  .backlink:hover{border-bottom:1px solid var(--teal)}
+  /* vectores de futuro */
+  .vector { padding: 1.3rem 0; border-top: 1px dashed var(--linea); }
+  .vector:first-of-type { border-top: none; }
+  .vector h3 {
+    font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.18rem;
+    color: var(--petroleo); margin-bottom: 0.5rem;
+  }
+  .vector p { font-size: 1.04rem; line-height: 1.55; color: var(--tinta-suave); margin-bottom: 0.7rem; }
+  .vector .sub { margin: 0.5rem 0 0.5rem 1.1rem; }
+  .vector .sub li { list-style: none; position: relative; padding-left: 1.1rem; margin-bottom: 0.5rem; font-size: 1.02rem; color: var(--tinta-suave); line-height: 1.5; }
+  .vector .sub li::before { content: "→"; position: absolute; left: 0; color: var(--petroleo); }
+
+  /* documentación */
+  .docs-list { margin-top: 1.4rem; }
+  .doc {
+    display: flex; align-items: baseline; gap: 0.8rem;
+    padding: 0.7rem 0; border-top: 1px solid var(--linea);
+    text-decoration: none; color: var(--tinta);
+    transition: color .15s;
+  }
+  .doc:last-child { border-bottom: 1px solid var(--linea); }
+  .doc:hover { color: var(--petroleo); }
+  .doc .arrow { font-family: 'IBM Plex Mono', monospace; color: var(--sepia); }
+  .doc .name { font-family: 'Fraunces', serif; font-weight: 500; font-size: 1.06rem; }
+  .doc .pend { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; color: var(--sepia); text-transform: uppercase; letter-spacing: 0.05em; margin-left: auto; }
+
+  .nota {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.82rem;
+    line-height: 1.6; color: var(--tinta-suave);
+    background: var(--papel-hondo); border-left: 2px solid var(--sepia);
+    padding: 0.9rem 1.1rem; margin: 1.5rem 0 0; border-radius: 0 3px 3px 0;
+  }
+
+  footer {
+    border-top: 1px solid var(--linea); padding: 2.5rem 0 3.5rem; color: var(--tinta-suave);
+  }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; align-items: baseline; }
+  footer .fnote { font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem; letter-spacing: 0.04em; }
+  footer a { color: var(--petroleo); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  ::selection { background: var(--petroleo); color: var(--papel); }
+  a:focus-visible { outline: 2px solid var(--petroleo); outline-offset: 3px; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
 </style>
 </head>
 <body>
 
-<nav>
-  <div class="wrap wide nav-inner">
-    <a href="index.html" class="brand"><span class="mark">H</span>Hermes-Colega</a>
-    <div class="nav-links">
-      <a href="index.html">Inicio</a>
-      <a href="proyecto.html" class="active">El proyecto</a>
-      <a href="https://github.com/mcanno/hercolega" target="_blank" rel="noopener">GitHub ↗</a>
-    </div>
-  </div>
-</nav>
-
-<header class="top">
+<div class="topbar">
   <div class="wrap">
-    <p class="eyebrow">El proyecto</p>
-    <h1>Un colega que recuerda lo que ya probaste</h1>
-    <p class="standfirst">No es un buscador de consejos. Es una arquitectura sobre cómo el conocimiento se sitúa en tu startup, se recupera según su naturaleza, y se mantiene honesto sobre lo que aún no sabe.</p>
+    <a href="index.html" class="brand">Hercolega<span class="dot">.</span></a>
+    <nav class="topnav"><a href="index.html">← Inicio</a></nav>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">El proyecto · visión técnica</div>
+    <h1>Cómo está construido: un <em>arnés de IA agéntica</em> para el emprendimiento.</h1>
+    <p class="lede">La home es la promesa. Esto es el cómo — y también el hasta dónde. No un producto terminado, sino un sistema vivo con una dirección pensada, que distingue con honestidad lo que ya está construido de lo que es horizonte. Nada se presenta como más de lo que es.</p>
   </div>
 </header>
 
 <main>
 
-  <section>
-    <div class="wrap">
-      <p class="lead-in">Hermes-Colega parte de una convicción: emprender en la era de la IA es un juego distinto, y no por usar IA como herramienta ocasional, sino por incorporar un colega que aprende de tu emprendimiento y crece con él.</p>
-      <p>De esa convicción sale una tesis, que gobierna todo lo demás:</p>
-      <p class="thesis">No hay nada más práctico que una buena teoría —pero la teoría hay que validarla en tu entorno: tu emprendimiento.</p>
-      <p>Una acción bien fundada vive en la intersección de dos conocimientos: el <strong>validado</strong> (lo que se sabe sobre cómo se construye una startup) y el <strong>del entorno</strong> (lo que ocurre en la tuya en concreto). Con solo el primero, aplicas un manual a ciegas. Con solo el segundo, reaccionas sin criterio. El proyecto entero es una respuesta a cómo juntar los dos sin confundirlos —y sin que ninguna startup exponga lo suyo.</p>
-    </div>
-  </section>
-
-  <hr class="divider">
-
-  <section>
-    <div class="wrap">
-      <h2><span class="n">01</span>Dos naturalezas de conocimiento, dos formas de recuperarlo</h2>
-      <p>La decisión técnica de fondo no fue elegir <em>una</em> forma de guardar conocimiento, sino reconocer que hay <strong>dos naturalezas distintas</strong>, y que cada una pide su propio mecanismo de recuperación.</p>
-
-      <div class="duo">
-        <div class="card">
-          <h3>Recuperación probabilística</h3>
-          <div class="big">RAG · búsqueda semántica</div>
-          <p>Cuando el conocimiento es difuso —mucho texto, matiz, sin una estructura conceptual nítida— se busca por <strong>semejanza de significado</strong>. Lo que se recupera son soluciones <em>potenciales</em>: lo más parecido a lo que preguntas, con cierta probabilidad de ser relevante.</p>
-          <p class="tag">Usado por: ideación · MVP · product-market-fit</p>
-        </div>
-        <div class="card">
-          <h3>Recuperación determinista</h3>
-          <div class="big">OKF · recorrido por grafo</div>
-          <p>Cuando el problema está <strong>definido</strong> —conceptos identificados, con relaciones explícitas— no se busca por parecido: se <strong>navega el grafo</strong>. Lo que se recupera no son candidatos probables, sino soluciones <em>experimentadas, con su resultado</em>.</p>
-          <p class="tag">Usado por: escalado · plataformas · operaciones</p>
-        </div>
+<section id="tesis">
+  <div class="wrap">
+    <div class="sec-num">01 — La tesis técnica</div>
+    <h2>Por qué no basta con <em>"preguntarle a una IA"</em>.</h2>
+    <p>El corazón del sistema es una distinción sobre cómo se recupera el conocimiento:</p>
+    <div class="dupla">
+      <div class="card">
+        <h3>Recuperación probabilística (RAG)</h3>
+        <p>Busca por semejanza: encuentra fragmentos parecidos a la pregunta. Potente y flexible, pero no garantiza que lo recuperado sea lo correcto — solo lo más parecido.</p>
       </div>
-
-      <p>La diferencia importa más de lo que parece. <strong>RAG dice "esto se parece a lo que buscas". OKF dice "esto ya se probó, y esto es lo que pasó".</strong> Uno opera sobre texto por probabilidad de semejanza; el otro sobre experiencia estructurada con resultados conocidos. No es viejo contra nuevo, ni estable contra cambiante: es <em>probabilidad de parecido</em> frente a <em>conocimiento determinista de lo ya experimentado</em>.</p>
-
-      <p>Dentro de lo determinista, cada solución lleva el grado de confianza en su resultado, y se presenta al fundador tal cual es:</p>
-      <p><span class="chip ver">verificado</span> — experimentado, con resultado conocido y validado (por ejemplo, los marcos consolidados de estrategia competitiva).<br>
-      <span class="chip eme">emergente</span> — experimentado, con resultado aún dudoso, pendiente de más verificación (por ejemplo, cómo se opera una startup nativa de IA, un terreno que se está escribiendo ahora).</p>
-
-      <p>Un consejo fundado en conocimiento emergente <strong>se marca como tal</strong> ante el fundador. El sistema no finge que sabe más de lo que sabe: distingue lo que está probado de lo que todavía es tentativo. Esa honestidad sobre el grado de certeza no es un adorno —es lo que permite que la decisión, que siempre es del fundador, se tome con información veraz.</p>
-    </div>
-  </section>
-
-  <hr class="divider">
-
-  <section>
-    <div class="wrap">
-      <h2><span class="n">02</span>Dos especializaciones que se encuentran</h2>
-      <p>El sistema está partido en dos, y el corte no es casual: responde a dos formas de estar especializado que son <strong>ortogonales</strong>.</p>
-      <p><strong>startup-next</strong> está especializado <em>por dominio de conocimiento</em> —metodología: ideación, escalado, plataformas…— pero es genérico respecto a la empresa: no conoce ninguna startup en concreto, sirve a todas por igual. Es un servicio central, compartido, <strong>sin estado</strong>.</p>
-      <p><strong>Hermes</strong> está especializado <em>por empresa</em>: lo sabe todo sobre TU startup —su historia, sus experimentos, qué validaste y qué falseaste— pero es generalista respecto al dominio. Tiene criterio y memoria, y consulta a los especialistas cuando necesita profundidad que no tiene.</p>
-      <p>Nadie conoce tu startup como tu Hermes, porque es el único que ha acumulado su memoria. Esa es la especialización que ningún competidor genérico puede ofrecer: no viene de fábrica, <strong>se gana con el uso</strong>.</p>
-    </div>
-  </section>
-
-  <hr class="divider">
-
-  <section>
-    <div class="wrap">
-      <h2><span class="n">03</span>Una arquitectura distribuida, por diseño</h2>
-      <p>Como Hermes guarda el estado real de una empresa, y las empresas están <strong>físicamente separadas</strong> en la realidad, sus Hermes también lo están: uno por emprendimiento, en Docker o en local, bajo control del emprendedor. No es un sistema central multiusuario con carpetas por cliente —es software que cada empresa despliega y corre por su cuenta.</p>
-      <p>La consecuencia es fuerte: <strong>la confidencialidad no es una característica que haya que proteger con esfuerzo, es una propiedad que emerge de la forma del sistema.</strong> Dos empresas no pueden filtrarse datos entre sí porque sus Hermes ni siquiera están en la misma máquina. El servicio central, por su parte, no guarda estado de nadie —esa fue una decisión deliberada, tomada antes de que el resto encajara: el conocimiento es compartido; el estado, jamás.</p>
-    </div>
-  </section>
-
-  <hr class="divider">
-
-  <section>
-    <div class="wrap">
-      <h2><span class="n">04</span>El ciclo, y lo que queda abierto</h2>
-      <p>El corazón del sistema es un ciclo: Hermes aconseja con conocimiento validado y con lo que sabe de ti; el fundador decide y actúa; le cuenta cómo fue; Hermes lo recuerda; y el siguiente consejo ya lo tiene en cuenta. <strong>La acción genera experiencia, la experiencia se vuelve conocimiento del entorno, y ese conocimiento funda la siguiente acción.</strong> No es una flecha; es un ciclo.</p>
-      <p>Ese ciclo se ha verificado de punta a punta: ante la misma pregunta, la segunda recomendación cambia cuando la memoria registra que la primera no funcionó. Un buscador habría repetido lo mismo.</p>
-      <p>Lo que queda abierto es, a la vez, lo más difícil y lo más interesante: <strong>cómo el conocimiento de frontera —el de la startup nativa de IA— se mantiene vivo sin dejar de ser honesto.</strong> No hay un libro canónico de un dominio que se escribe cada semana; el conocimiento válido solo puede surgir de la experimentación real de muchas startups. Destilarlo de forma agregada y anónima, sin que ninguna exponga lo suyo, es el problema de diseño más ambicioso del proyecto —y el que da sentido a todo lo anterior.</p>
-    </div>
-  </section>
-
-  <hr class="divider">
-
-  <section>
-    <div class="wrap">
-      <h2><span class="n">05</span>Observar el agente sin ver al fundador</h2>
-      <p>Un agente no falla como el software corriente: no se cae, devuelve una respuesta plausible fundada en nada. Este proyecto ya lo vivió —una recuperación que devolvía vacío sin lanzar ningún error—. Por eso un sistema así <strong>necesita poder observarse</strong>: saber si el agente hace lo que dice hacer. Es el mismo principio de honestidad del consejo, aplicado ahora al funcionamiento del propio agente.</p>
-      <p>Pero observar choca con la confidencialidad: si cada Hermes vive en el entorno del emprendedor, ¿cómo se mejora el sistema sin ver los datos de nadie? La respuesta separa el <em>contenido</em> (sagrado, nunca sale) del <em>comportamiento</em> (qué especialista se activó, si una recuperación vino vacía). Cada Hermes se observa a sí mismo en local, completo y privado; y, solo con permiso del fundador, emite métricas de comportamiento <strong>anonimizadas en origen y sin hilo que las conecte</strong> —el sistema aprende del conjunto sin poder seguir el rastro de ninguna startup—. Es, de hecho, el primer ensayo del mismo principio que gobierna la ambición del proyecto: aprender del conjunto sin ver al individuo.</p>
-    </div>
-  </section>
-
-  <section>
-    <div class="wrap docs">
-      <h2>Leer el detalle</h2>
-      <p>El razonamiento completo, con evidencia y decisiones documentadas, vive en el repositorio. Estos son los documentos que sostienen lo anterior:</p>
-      <div class="doclist">
-        <a href="https://github.com/mcanno/hercolega/blob/main/docs/vision.md" target="_blank" rel="noopener" class="doclink">
-          <span class="dt">Visión: Hermes-Colega</span><span class="dd">principio rector · el mantra · la frontera</span></a>
-        <a href="https://github.com/mcanno/hercolega/blob/main/docs/mecanismo-okf-grafo.md" target="_blank" rel="noopener" class="doclink">
-          <span class="dt">Diseño del mecanismo OKF-grafo</span><span class="dd">recuperación determinista</span></a>
-        <a href="https://github.com/mcanno/hercolega/blob/main/docs/expansion-especialistas.md" target="_blank" rel="noopener" class="doclink">
-          <span class="dt">Expansión de especialistas</span><span class="dd">RAG + OKF · taxonomía de 6</span></a>
-        <a href="https://github.com/mcanno/hercolega/blob/main/docs/ontology-engine.md" target="_blank" rel="noopener" class="doclink">
-          <span class="dt">ontology-engine como servicio de consulta</span><span class="dd">el estado, jamás en el centro</span></a>
-        <a href="https://github.com/mcanno/hercolega/blob/main/docs/ciclo-completo.md" target="_blank" rel="noopener" class="doclink">
-          <span class="dt">Verificación del ciclo completo</span><span class="dd">la memoria cambia el consejo</span></a>
-        <a href="https://github.com/mcanno/hercolega/blob/main/docs/observabilidad.md" target="_blank" rel="noopener" class="doclink">
-          <span class="dt">Observabilidad</span><span class="dd">observar el agente sin ver al fundador</span></a>
+      <div class="card">
+        <h3>Recuperación determinista (grafo OKF)</h3>
+        <p>Recupera por relaciones explícitas entre conceptos: prerrequisitos, conceptos relacionados. No adivina por semejanza; sigue un mapa.</p>
       </div>
-      <a href="index.html" class="backlink">← Volver al inicio</a>
     </div>
-  </section>
+    <p>El sistema usa ambas, cada una donde rinde mejor. Y sobre la determinista construye algo más: la distinción entre conocimiento <em class="term">validado</em> y <em class="term">emergente</em> — no como dos fuentes distintas, sino como grados de certeza dentro del conocimiento estructurado. Cuando un especialista recupera conocimiento emergente, lo marca explícitamente ante el fundador. El sistema no finge una certeza que no tiene.</p>
+    <p>Esa honestidad epistémica no es un adorno: es la implementación técnica de la tesis de la home. Distinguir lo que resiste de lo que se está formando, y no mentir sobre cuál es cuál.</p>
+  </div>
+</section>
+
+<section id="especialistas">
+  <div class="wrap">
+    <div class="sec-num">02 — Los especialistas</div>
+    <h2>Siete especialistas, con bases que evolucionan <em>por separado</em>.</h2>
+    <p>En lugar de un único modelo que responde de todo, un orquestador enruta cada consulta al especialista adecuado para la fase o el desafío. Cada uno se apoya en fuentes concretas y cita de dónde viene su recomendación.</p>
+    <div class="esp-list">
+      ideación · mvp · encaje producto-mercado · escalado · plataformas · operaciones · gobernanza
+    </div>
+    <p>Pero los especialistas no son una lista plana ni fija. Cada uno tiene su propia base de conocimiento, y esas bases evolucionan de forma dispar — en madurez y en ritmo:</p>
+    <div class="dupla">
+      <div class="card">
+        <h3>Conocimiento asentado</h3>
+        <p>Las palancas de poder, el desarrollo de clientes. Roca firme; evoluciona poco porque su campo apenas se mueve.</p>
+      </div>
+      <div class="card">
+        <h3>Conocimiento en formación</h3>
+        <p>Cómo se organiza una empresa nativa de IA. Frontera; evoluciona más y más deprisa — y el sistema lo marca como emergente, sin fingir que está asentado.</p>
+      </div>
+    </div>
+    <p>El mecanismo que lo hace posible es genérico: añadir o ampliar la base de un especialista no toca a los demás ni al motor común — verificado al incorporar varios especialistas sucesivos sin un solo cambio en el mecanismo. Cada campo crece a su propio ritmo, que es justo lo que un mundo donde el conocimiento caduca de forma desigual requiere.</p>
+    <p>Esto no es <em>"muchos agentes por defecto"</em> —un antipatrón conocido—: es un orquestador que selecciona <strong>uno</strong> por consulta, no varios coordinándose en paralelo. La complejidad está en el conocimiento, no en la coordinación.</p>
+  </div>
+</section>
+
+<section id="arquitectura">
+  <div class="wrap">
+    <div class="sec-num">03 — La arquitectura</div>
+    <h2>Conocimiento central + tu agente, por un <em>estándar abierto</em>.</h2>
+    <p>El conocimiento especializado vive en un servicio central sin estado: sabe de emprendimiento, no de ninguna startup en particular, y no guarda datos de nadie. Se expone a través de un servidor <strong>MCP</strong> (Model Context Protocol), el estándar abierto para dar capacidades a agentes de IA.</p>
+    <p>¿Por qué un estándar abierto y no una integración propietaria? Porque desacopla el conocimiento de cualquier agente concreto. El emprendedor instala el agente personal que prefiera —Hermes Agent, de Nous Research, es una opción abierta y madura, con memoria y canales como Telegram—, le conecta este servidor MCP, y su agente gana la capacidad de consultar el conocimiento especializado junto a todo lo demás que ya hace. No depende de nosotros: cualquier agente que hable el estándar puede usarlo.</p>
+    <p>Así, la memoria de la startup vive en el agente del emprendedor (bajo su control), y el conocimiento vive en el centro (compartido, sin estado). Cada uno en su sitio, comunicados por un estándar que nadie posee.</p>
+  </div>
+</section>
+
+<section id="arnes">
+  <div class="wrap">
+    <div class="sec-num">04 — El sistema como arnés</div>
+    <h2>Los componentes de un sistema agéntico maduro — y dónde está cada uno.</h2>
+    <p>Un sistema agéntico de producción no es un modelo suelto: es un <em>arnés</em> de software que canaliza el modelo hacia tareas útiles y fiables. Estos son sus componentes, y para cada uno, con honestidad, dónde está este proyecto.</p>
+
+    <div class="arnes">
+      <div class="arnes-row">
+        <div class="comp">Capa de herramientas (MCP)</div>
+        <div><span class="estado construido">Construido</span></div>
+        <div class="desc">El conocimiento se expone por MCP, el estándar. Dos herramientas verificadas de punta a punta contra un agente real.</div>
+      </div>
+      <div class="arnes-row">
+        <div class="comp">Resultados estructurados y determinismo</div>
+        <div><span class="estado construido">Construido</span></div>
+        <div class="desc">Las decisiones se validan contra esquemas, no texto libre, con una capa de reparación determinista. La clasificación y el parseo son reglas fijas — el LLM entra solo en los puntos de decisión clave.</div>
+      </div>
+      <div class="arnes-row">
+        <div class="comp">Orquestación de especialistas</div>
+        <div><span class="estado construido">Construido</span></div>
+        <div class="desc">Un orquestador enruta a especialistas con aislamiento de contexto. Selección de uno, no coordinación de muchos.</div>
+      </div>
+      <div class="arnes-row">
+        <div class="comp">Supervisión humana</div>
+        <div><span class="estado construido">Construido</span></div>
+        <div class="desc">El servidor de consulta es de solo lectura. Las acciones con consecuencia requieren confirmación. La autoridad y la decisión son siempre del fundador.</div>
+      </div>
+      <div class="arnes-row">
+        <div class="comp">Manejo de fallos</div>
+        <div><span class="estado construido">Construido</span></div>
+        <div class="desc">Fallo ruidoso, nunca silencioso: el sistema ha encontrado y corregido degradaciones reales (conocimiento que se recuperaba vacío sin lanzar error). Topes y salidas terminales explícitas.</div>
+      </div>
+      <div class="arnes-row">
+        <div class="comp">Evaluación y regresión</div>
+        <div><span class="estado parcial">Parcial</span></div>
+        <div class="desc">Suite de tests offline y regresión de especialistas ante cada cambio. Horizonte: medir la fiabilidad de forma sistemática, no solo demostrarla — de "funciona en la demo" a "funciona el N% de las veces, medido".</div>
+      </div>
+      <div class="arnes-row">
+        <div class="comp">Memoria a largo plazo</div>
+        <div><span class="estado delegado">Delegado</span></div>
+        <div class="desc">Por decisión: la memoria de la startup vive en el agente del emprendedor, que ya la aporta. El conocimiento central es deliberadamente sin estado.</div>
+      </div>
+      <div class="arnes-row">
+        <div class="comp">Observabilidad</div>
+        <div><span class="estado disenado">Diseñado</span></div>
+        <div class="desc">Hay un diseño (con Langfuse, autoalojable) y el principio anti-fallo-silencioso ya gobierna el código. La instrumentación completa en producción es horizonte; parte la aporta ya el agente anfitrión.</div>
+      </div>
+      <div class="arnes-row">
+        <div class="comp">Enrutamiento por coste</div>
+        <div><span class="estado horizonte">Horizonte</span></div>
+        <div class="desc">Hoy no se enruta por coste. El diseño contempla el reparto —modelo ligero para tareas domésticas, pesado para el conocimiento—; convertirlo en enrutamiento operativo es un vector de evolución.</div>
+      </div>
+    </div>
+
+    <div class="leyenda">
+      <span><b style="color:var(--e-construido)">●</b> Construido — verificado</span>
+      <span><b style="color:var(--e-parcial)">●</b> Parcial</span>
+      <span><b style="color:var(--e-delegado)">●</b> Delegado por decisión</span>
+      <span><b style="color:var(--e-disenado)">●</b> Diseñado, no implementado</span>
+      <span><b style="color:var(--e-horizonte)">●</b> Horizonte</span>
+    </div>
+
+    <p class="cierre-sec">La credibilidad no está en marcar todas las casillas, sino en saber cuál está en qué estado. Este es el mapa honesto: una base sólida construida, y una dirección clara de hacia dónde crece.</p>
+  </div>
+</section>
+
+<section id="recorrido">
+  <div class="wrap">
+    <div class="sec-num">05 — El recorrido futuro</div>
+    <h2>Hacia dónde va.</h2>
+    <p class="lead-in">Las casillas "horizonte" de arriba no son carencias: son la dirección del proyecto, en su mayoría ya pensadas y documentadas.</p>
+
+    <div class="vector">
+      <h3>De demostrar a medir la fiabilidad</h3>
+      <p>El sistema funciona; el siguiente paso es medir con qué fiabilidad, por etapas, en cada punto de la cadena. La brecha entre una demo brillante y un sistema fiable es real, y cerrarla es trabajo consciente.</p>
+    </div>
+    <div class="vector">
+      <h3>Instrumentar la observabilidad</h3>
+      <p>Del diseño a la práctica: registro de lo que el sistema genera, de las herramientas, del coste — sin ver los datos privados de ninguna startup, con la anonimización contemplada en origen.</p>
+    </div>
+    <div class="vector">
+      <h3>El aprendizaje agregado</h3>
+      <p>El horizonte más profundo, y el que conecta con la tesis de la home: que el conocimiento emergente se valide con la experiencia real y agregada de muchas startups — que lo emergente pueda ganarse el paso a validado no porque alguien lo decida, sino porque la práctica lo respalda. Un sistema que aprende de la frontera sin ver al individuo.</p>
+    </div>
+    <div class="vector">
+      <h3>El patrón, replicable a un ecosistema</h3>
+      <p>Lo aquí construido —conocimiento especializado, expuesto por un estándar abierto, consumible por cualquier agente— es <em>una instancia</em> de un patrón general. Escala en dos ejes:</p>
+      <ul class="sub">
+        <li><strong>Horizontal:</strong> otros dominios (ventas, operaciones, legal, finanzas…) como servidores MCP independientes, orquestados por un mismo agente como un equipo de especialistas.</li>
+        <li><strong>Vertical:</strong> el conocimiento de un colega evoluciona hacia fronteras emergentes — ejemplos de lo que probablemente aparezca pronto: los sistemas operativos de IA (AIOS), o la innovación en un entorno de reglas cambiantes.</li>
+      </ul>
+      <p>No es especulación: la pieza difícil —una instancia completa, verificada de punta a punta— ya está hecha. Replicar el patrón es repetir un camino probado, no abrir uno nuevo. Dicho con la honestidad del recorrido: hoy hay <strong>un</strong> colega, en <strong>un</strong> dominio, funcionando; el ecosistema y la evolución son dirección demostrable, no realidad presente.</p>
+    </div>
+
+    <p class="cierre-sec">Este proyecto se entiende mejor como un recorrido que como un entregable. Lo construido es real y sólido; lo pendiente tiene dirección. Ambas cosas, dichas con la misma honestidad.</p>
+  </div>
+</section>
+
+<section id="docs">
+  <div class="wrap">
+    <div class="sec-num">06 — La documentación</div>
+    <h2>Todo, en detalle.</h2>
+    <p>Cada afirmación de esta página está respaldada por documentación y por código. Para el detalle completo:</p>
+    <div class="docs-list">
+      <a class="doc" href="https://github.com/mcanno/hercolega/blob/main/docs/vision.md" target="_blank" rel="noopener"><span class="arrow">→</span><span class="name">Visión: Hercolega</span></a>
+      <a class="doc" href="https://github.com/mcanno/hercolega/blob/main/docs/mecanismo-okf-grafo.md" target="_blank" rel="noopener"><span class="arrow">→</span><span class="name">El mecanismo OKF-grafo (recuperación determinista)</span></a>
+      <a class="doc" href="https://github.com/mcanno/hercolega/blob/main/docs/expansion-especialistas.md" target="_blank" rel="noopener"><span class="arrow">→</span><span class="name">Expansión de especialistas (RAG + OKF)</span></a>
+      <a class="doc" href="https://github.com/mcanno/hercolega/blob/main/docs/ontology-engine.md" target="_blank" rel="noopener"><span class="arrow">→</span><span class="name">ontology-engine: el estado, nunca en el centro</span></a>
+      <a class="doc" href="https://github.com/mcanno/hercolega/blob/main/docs/ciclo-completo.md" target="_blank" rel="noopener"><span class="arrow">→</span><span class="name">Verificación del ciclo completo</span></a>
+      <a class="doc" href="https://github.com/mcanno/hercolega/blob/main/docs/donde-piensa-cada-cosa.md" target="_blank" rel="noopener"><span class="arrow">→</span><span class="name">Dónde piensa cada cosa</span></a>
+      <a class="doc" href="https://github.com/mcanno/hercolega/blob/main/docs/diseno-servidor-mcp.md" target="_blank" rel="noopener"><span class="arrow">→</span><span class="name">Diseño del servidor MCP</span></a>
+      <a class="doc" href="https://github.com/mcanno/hercolega/blob/main/docs/observabilidad.md" target="_blank" rel="noopener"><span class="arrow">→</span><span class="name">Observabilidad</span></a>
+    </div>
+    <p class="nota">La verdad última vive en el código; estos documentos son su explicación.</p>
+  </div>
+</section>
 
 </main>
 
 <footer>
-  <div class="wrap wide foot-inner">
-    <span>Hermes-Colega · un proyecto sobre emprender en la era de la IA</span>
-    <span><a href="index.html">Inicio</a> · <a href="https://github.com/mcanno/hercolega" target="_blank" rel="noopener">GitHub</a></span>
+  <div class="wrap">
+    <div class="fnote">Hercolega — un arnés de IA agéntica para el emprendimiento</div>
+    <div class="fnote"><a href="index.html">← Volver al inicio</a></div>
   </div>
 </footer>
 
