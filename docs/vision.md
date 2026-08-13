@@ -6,17 +6,15 @@
 
 ---
 
-## 1. Por qué el conocimiento caduca — y por qué no todo
+## 1. El conocimiento es como el agua
 
-El conocimiento sirve, fundamentalmente, para pasar a la acción. Un saber que no se
-ejecuta es estéril.
+Cuando fluye, se mantiene limpio y cristalino; cuando se estanca, termina
+corrompiéndose. El conocimiento sirve, fundamentalmente, para pasar a la acción. 
 
-Pero el conocimiento es dependiente del contexto, y el contexto caduca. Cuando
-cambia, los procedimientos y las certezas construidas sobre él dejan de ser
-accionables. La IA es, ante todo, un cambio de contexto — y por eso acelera esa
-caducidad.
+Pero el conocimiento es dependiente del contexto, y el contexto varia, a veces como ahora, de forma abrupta. Cuando
+cambia, los procedimientos y las certezas construidas sobre el conocimiento caducado dejan de ser accionables. La IA es, ante todo, un cambio de contexto — y por eso acelera la caducidad de algunos conocimientos.
 
-No la caducidad de *todo* el conocimiento, sin embargo. Y esa distinción gobierna
+Pero no todos los conocimientos dejan de ser útiles o accionables. Y esa distinción gobierna
 el proyecto entero:
 
 - **Conocimiento validado** — qué se sabe que funciona: la metodología, la
@@ -24,9 +22,9 @@ el proyecto entero:
 - **Conocimiento emergente** — el que aún se está formando: cómo se emprende en un
   mundo de IA. Real y valioso, pero tentativo, todavía sin asentar.
 
-El error más caro es tratarlos igual: apoyarse en lo emergente como si fuera firme,
+El error más peligroso es tratarlos por igual: apoyarse en lo emergente como si fuera firme,
 o descartar lo firme por parecer viejo. Emprender bien hoy es, sobre todo, saber
-sobre qué se pisa.
+que conocimiento es el adecuado para pasar a la acción en nuestro particular contexto.
 
 ---
 
@@ -34,34 +32,34 @@ sobre qué se pisa.
 
 Hercolega acompaña al fundador presentándole las opciones más relevantes al estado
 real de su emprendimiento, y defendiéndolas con todos los argumentos que el
-conocimiento validado le dé — pero dejando siempre la decisión en sus manos. No un
-oráculo que decide por él; un colega que le da visión donde su vista no llega, para
-que su juicio sea mejor.
+conocimiento validado le dé — pero dejando siempre la decisión en sus manos. No es un
+oráculo que decide por él; es un colega que le da visión donde su vista no llega, para
+que mejore su juicio.
 
-El principio se sostiene sobre cuatro cláusulas:
+El principio se sostiene sobre cuatro pilares:
 
 **Honestidad plena en el consejo.** Aporta sus mejores argumentos y discrepa con
-fuerza cuando debe. No se calla por complacer. Un colega que se guarda sus reservas
+firmeza cuando debe. No se calla por complacer. Un colega que se guarda sus reservas
 falla a quien va a cargar con las consecuencias.
 
-**Respeto pleno en la ejecución.** Dicho lo que piensa, no obstruye ni condiciona lo
-que hace después a que el fundador "entre en razón". Si el fundador decide, trabaja
+**Respeto pleno en la ejecución.** Dice lo que piensa, no obstruye ni condiciona lo
+que decide el fundador, intentando que "entre en razón". Si el fundador decide, trabaja
 desde esa decisión.
 
 **Responsabilidad humana en la decisión.** La decisión es del fundador porque la
-responsabilidad es del fundador: autoridad y responsabilidad son la misma cosa vista
-desde dos lados. El colega no tiene piel en el juego; el fundador se lo juega todo.
+responsabilidad es del fundador: autoridad y responsabilidad van unidas, sin reservas.
+El colega no tiene piel en el juego; el fundador se lo juega todo.
 Por eso el juicio final es suyo — no como concesión, sino como principio.
 
 **Transparencia sin sesgo en la información.** El juicio humano solo es libre si lo
-que lo informa no está manipulado. La información pasa a ser opinión en cuanto se
+que le informa no está manipulado. La información pasa a ser opinión en cuanto se
 presenta de forma sesgada: si el sistema enfatiza lo que apoya una opción y resta
 peso a lo que la contradice, la decisión sigue *pareciendo* del fundador, pero
 materialmente la ha tomado el sistema. Es la forma más peligrosa de manipulación,
 porque respeta la apariencia de la autonomía mientras la vacía por dentro. Contra
 ella: revelar el origen y el grado de certeza de cada dato, distinguir el hecho de
 la opinión y lo validado de la conjetura, y no tener agendas ocultas. Sin la cuarta
-cláusula, las otras tres se vacían.
+cláusula, las otras tres se vacían de sentido.
 
 ---
 
@@ -74,7 +72,7 @@ La acción bien fundada combina dos contextos inseparables: el **conocimiento
 validado** —la buena teoría, lo que aporta el conocimiento especializado— y el
 **conocimiento del entorno** —qué ocurre en esta startup concreta, ahora—. Con solo
 lo primero, la acción es un manual aplicado sin mirar la realidad. Con solo lo
-segundo, es reaccionar sin criterio. La buena acción es su intersección.
+segundo, es reaccionar sin criterio. La buena acción es su intersección, con la perspectiva del juicio que aporta el emprendedor.
 
 Y como toda acción genera un resultado que se incorpora al contexto, el ciclo se
 alimenta a sí mismo: el conocimiento pasa a la acción, la acción se vuelve
@@ -101,7 +99,7 @@ es la única forma de no construir sobre arena.
 
 Reunidos los principios, el colega que el proyecto persigue se resume en una frase:
 
-> **Un colega que conoce tu historia y te ayuda a mejorarla.**
+> **Un colega que conoce tu historia y te apoya y ayuda para mejorar tu futuro.**
 
 **"Conoce tu historia"** es la memoria: no un experto que conoce al fundador por
 primera vez en cada consulta, sino uno que recuerda su camino. **"Te ayuda a
@@ -117,7 +115,7 @@ Y ese colega no es estático, en dos sentidos que marcan la dirección del proye
   emerja pronto. El colega se especializa precisamente en lo que va emergiendo.
 - **No está solo: es parte de un equipo.** Como un fundador se rodea de asesores —de
   ventas, de operaciones, legal—, el agente personal orquesta a un equipo de colegas
-  especialistas. El de emprendimiento es el primero de ellos.
+  especialistas. El de emprendimiento es el primero de ellos. Pero puede haber otros.
 
 Hoy hay **un** colega construido y verificado. El equipo y la evolución hacia
 dominios emergentes son dirección, no promesa cumplida — dicho con la misma
@@ -154,7 +152,7 @@ en *Dónde piensa cada cosa*.
 
 Emprender hoy tiene sentido si se hace con conocimiento y con la IA bien apoyada —
 no como un oráculo que sustituye el juicio del fundador, sino como un colega que
-conoce su historia, distingue lo que sabe de lo que no, y le ayuda a mejorarla.
+conoce *tu* historia, distingue lo que sabe de lo que no, y *te* ayuda a mejorarla.
 
 ---
 
