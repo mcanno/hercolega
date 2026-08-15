@@ -205,6 +205,19 @@
   footer a { color: var(--petroleo); text-decoration: none; }
   footer a:hover { text-decoration: underline; }
 
+  /* ---- sección 00 — la intención y los elementos (añadida, no toca otras reglas) ---- */
+  #intencion h3 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.06em;
+    font-weight: 500; color: var(--petroleo);
+    margin: 1.8rem 0 0.4rem;
+  }
+  #intencion h3:first-of-type { margin-top: 0.6rem; }
+  #intencion .diagrama-img {
+    display: block; max-width: 100%; height: auto;
+    margin: 1.8rem auto 0; border-radius: 3px; border: 1px solid var(--linea);
+  }
+
   ::selection { background: var(--petroleo); color: var(--papel); }
 
   a:focus-visible, .btn:focus-visible { outline: 2px solid var(--petroleo); outline-offset: 3px; }
@@ -233,6 +246,75 @@
 </header>
 
 <main>
+
+<section id="intencion">
+  <div class="wrap">
+    <div class="sec-num">00 — La intención y los elementos</div>
+    <h2>La intención y los elementos</h2>
+
+    <h3>Nuestra intención</h3>
+    <p>La intención última del proyecto Hercolega es facilitar el proceso de emprendimiento a cualquier fundador o equipo de fundadores. El objetivo es aumentar sus probabilidades de éxito y asegurar que su esfuerzo se utilice de la forma más productiva posible.</p>
+    <p>Para lograrlo, el sistema se apoya en tres fundamentos:</p>
+    <div class="comp">
+      <div class="comp-item">
+        <div class="nombre">Una metodología probada</div>
+        <div class="desc">Basada en los principios de Lean Startup y los modelos de negocio más rigurosos.</div>
+      </div>
+      <div class="comp-item">
+        <div class="nombre">Diagnóstico y acción guiada</div>
+        <div class="desc">Un conjunto de agentes de inteligencia artificial diseñados para evaluar el estado actual de la empresa y aconsejar los siguientes pasos consultando bases de conocimiento verificadas y seleccionadas.</div>
+      </div>
+      <div class="comp-item">
+        <div class="nombre">Un "colega" agéntico</div>
+        <div class="desc">Un sistema de IA asignado a cada startup (como el Agente Hermes) que asume tareas y acompaña al emprendedor bajo los principios de una "organización nativa de IA".</div>
+      </div>
+    </div>
+
+    <h3>Los elementos del ecosistema</h3>
+    <p>Para materializar esta visión, Hercolega se compone de piezas especializadas que trabajan en conjunto:</p>
+    <div class="comp">
+      <div class="comp-item">
+        <div class="nombre">Startup-Advisor</div>
+        <div class="desc">Es tu punto de partida. Consiste en una interfaz web conversacional que diagnostica el estado de tu startup. Al terminar, produce un informe detallado (PDF) para guiar tu próxima gran decisión.</div>
+      </div>
+      <div class="comp-item">
+        <div class="nombre">Ontology-Engine</div>
+        <div class="desc">Es el motor de conocimiento estructurado (grafos y tripletas) que alimenta al Advisor, construido estrictamente sobre los fundamentos de la metodología Lean Startup.</div>
+      </div>
+      <div class="comp-item">
+        <div class="nombre">Startup-Next (El Cerebro)</div>
+        <div class="desc">Es la aplicación multiagente central. Está compuesta por un orquestador y siete agentes especialistas (ideación, encaje producto-mercado, escalado, etc.) que extraen información de bases de datos avanzadas (RAG y OKF). Funciona de forma anónima: no guarda datos identificativos de tu startup.</div>
+      </div>
+      <div class="comp-item">
+        <div class="nombre">Startup-next-ui</div>
+        <div class="desc">Es la puerta de acceso web directo a Startup-Next. Mediante autenticación segura (lista de correos autorizados), te permite hacer consultas libres o cargar el PDF generado por startup-advisor.</div>
+      </div>
+      <div class="comp-item">
+        <div class="nombre">Agente Hermes</div>
+        <div class="desc">Tu verdadero colega del día a día. Se trata de un agente independiente en Telegram que se conecta a Startup-Next a través de un estándar abierto (MCP). Hermes recuerda tu contexto histórico y colabora contigo en tiempo real para desarrollar las tareas recomendadas.</div>
+      </div>
+    </div>
+
+    <h3>Diagrama simplificado</h3>
+    <p>En el diagrama siguiente aparecen los elementos descritos y cómo se coordinan:</p>
+    <div class="comp">
+      <div class="comp-item">
+        <div class="nombre">Diagnóstico</div>
+        <div class="desc">El fundador interactúa con Startup-Advisor (apoyado en el Ontology-Engine) para obtener un informe en PDF.</div>
+      </div>
+      <div class="comp-item">
+        <div class="nombre">Consulta directa</div>
+        <div class="desc">El fundador interactúa mediante la web Startup-next-ui con el núcleo Startup-Next para extraer el conocimiento preciso sobre su mejor próxima acción y la forma de ejecutarla.</div>
+      </div>
+      <div class="comp-item">
+        <div class="nombre">El colega en Telegram</div>
+        <div class="desc">A través de un Agente Hermes (uno por cada startup): el fundador usa Telegram para pedirle a su Agente Hermes que se conecte al conocimiento de Startup-Next usando el protocolo MCP.</div>
+      </div>
+    </div>
+
+    <img class="diagrama-img" src="img/Hercolega_diagrama_mejorado.jpg" alt="Diagrama del ecosistema Hercolega: el fundador, Startup-Advisor, Ontology-Engine, Startup-Next con sus especialistas, y el Agente Hermes conectado por MCP">
+  </div>
+</section>
 
 <section id="contexto">
   <div class="wrap">
