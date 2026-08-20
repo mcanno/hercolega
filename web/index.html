@@ -7,7 +7,7 @@
 <meta name="description" content="Nunca hubo mejor momento para emprender, si lo haces con conocimiento y con la IA bien apoyada. Un colega que conoce tu historia y te ayuda a mejorarla.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
     --papel: #f4f0e6;
@@ -205,22 +205,87 @@
   footer a { color: var(--petroleo); text-decoration: none; }
   footer a:hover { text-decoration: underline; }
 
+  /* ---- bloque destacado: el experimento (añadido, no toca los puntos numerados) ---- */
+  .experimento { padding-bottom: 1rem; }
+  .experimento .sello {
+    background: var(--papel-hondo);
+    border: 1px solid var(--linea);
+    border-top: 4px solid var(--petroleo);
+    border-radius: 4px;
+    padding: 1.7rem 1.5rem;
+  }
+  @media (min-width: 620px) {
+    .experimento .sello { padding: 2.3rem 2.2rem; }
+  }
+  .experimento .etiqueta {
+    display: flex; align-items: center; gap: 0.9rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.16em;
+    font-weight: 600; color: var(--petroleo);
+    margin-bottom: 1.4rem;
+  }
+  .experimento .etiqueta::after { content: ''; flex: 1; height: 1px; background: var(--linea); }
+  .experimento h2 { margin-bottom: 0.3rem; }
+  .experimento .subtitulo, #sintesis .subtitulo {
+    font-family: 'Fraunces', serif; font-style: italic; font-weight: 500;
+    font-size: 1.15rem; color: var(--petroleo); margin-bottom: 1.3rem;
+  }
+  .experimento .divisor, #sintesis hr { border: none; border-top: 1px solid var(--linea); margin: 1.6rem 0; }
+  .experimento .resultados { display: grid; grid-template-columns: 1fr; gap: 1.2rem; }
+  @media (min-width: 620px) {
+    .experimento .resultados { grid-template-columns: 1fr 1fr; gap: 1.8rem; }
+  }
+  .experimento .resultado h3 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em;
+    font-weight: 500; margin-bottom: 0.5rem;
+  }
+  .experimento .resultado.tecnico h3 { color: var(--marca-verificado); }
+  .experimento .resultado.funcional h3 { color: var(--marca-emergente); }
+  .experimento .resultado p { font-size: 1.02rem; line-height: 1.5; margin: 0; }
+  .experimento .validado { color: var(--marca-verificado); font-weight: 600; }
+  .experimento .en-validacion { color: var(--marca-emergente); font-weight: 600; }
+  .experimento .btn-sintesis {
+    display: inline-block; margin-top: 1.8rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--papel); text-decoration: none;
+    background: var(--petroleo); border: 1px solid var(--petroleo-claro);
+    padding: 0.75rem 1.5rem; border-radius: 3px;
+    transition: background .2s;
+  }
+  .experimento .btn-sintesis:hover { background: var(--petroleo-claro); }
+
   /* ---- sección 00 — la intención y los elementos (añadida, no toca otras reglas) ---- */
-  #intencion h3 {
+  #intencion h3, #sintesis h3 {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.06em;
     font-weight: 500; color: var(--petroleo);
     margin: 1.8rem 0 0.4rem;
   }
-  #intencion h3:first-of-type { margin-top: 0.6rem; }
+  #intencion h3:first-of-type, #sintesis h3:first-of-type { margin-top: 0.6rem; }
   #intencion .diagrama-img {
     display: block; max-width: 100%; height: auto;
     margin: 1.8rem auto 0; border-radius: 3px; border: 1px solid var(--linea);
   }
 
+  /* ---- sección síntesis (añadida, reutiliza .sec-num, .ancla, h3 de #intencion) ---- */
+  .ancla.fuerte { font-weight: 700; }
+  #sintesis ul { margin: 0 0 1.15rem 1.3rem; }
+  #sintesis li { margin-bottom: 0.5rem; }
+  #sintesis li:last-child { margin-bottom: 0; }
+  #sintesis .tabla-wrap { overflow-x: auto; margin: 1.6rem 0; }
+  #sintesis table { width: 100%; border-collapse: collapse; font-size: 1rem; }
+  #sintesis th, #sintesis td { text-align: left; padding: 0.7rem 0.9rem; border-bottom: 1px solid var(--linea); vertical-align: top; }
+  #sintesis th {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; text-transform: uppercase;
+    letter-spacing: 0.05em; font-weight: 500; color: var(--sepia); background: var(--papel-hondo);
+  }
+  #sintesis td:first-child, #sintesis th:first-child { padding-left: 0; }
+
   ::selection { background: var(--petroleo); color: var(--papel); }
 
-  a:focus-visible, .btn:focus-visible { outline: 2px solid var(--petroleo); outline-offset: 3px; }
+  a:focus-visible, .btn:focus-visible, .btn-sintesis:focus-visible { outline: 2px solid var(--petroleo); outline-offset: 3px; }
 
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
@@ -246,6 +311,29 @@
 </header>
 
 <main>
+
+<div class="experimento">
+  <div class="wrap">
+    <div class="sello">
+      <div class="etiqueta">El experimento</div>
+      <h2>El emprendimiento y la IA</h2>
+      <p class="subtitulo">resultados de un experimento</p>
+      <p>Hercolega trata de falsear o validar si la IA cambia dos áreas clave del emprendimiento: el <strong>desarrollo de software</strong> y la <strong>gestión del conocimiento</strong>.</p>
+      <hr class="divisor">
+      <div class="resultados">
+        <div class="resultado tecnico">
+          <h3>Resultado técnico</h3>
+          <p>el desarrollo de software ha cambiado — <span class="validado">validado</span></p>
+        </div>
+        <div class="resultado funcional">
+          <h3>Resultado funcional</h3>
+          <p>la gestión del conocimiento ha cambiado — <span class="en-validacion">en validación</span></p>
+        </div>
+      </div>
+      <a href="#sintesis" class="btn-sintesis">Leer la síntesis del experimento →</a>
+    </div>
+  </div>
+</div>
 
 <section id="intencion">
   <div class="wrap">
@@ -410,6 +498,63 @@
       <a class="paso" href="https://github.com/mcanno/hercolega/blob/main/docs/diseno-servidor-mcp.md" target="_blank" rel="noopener"><div class="txt"><strong>Instala tu colega</strong><span>Conecta el conocimiento a tu propio agente de IA y empieza a trabajar con él.</span></div></a>
     </div>
     <p class="nota">Nota honesta: hoy hay un colega construido y funcionando —el de emprendimiento—. El equipo de colegas y su evolución hacia nuevos dominios son la dirección hacia la que crece el proyecto, no una promesa ya cumplida.</p>
+  </div>
+</section>
+
+<section id="sintesis">
+  <div class="wrap">
+    <div class="sec-num">Síntesis del experimento</div>
+    <h2>El emprendimiento y la IA</h2>
+    <p class="subtitulo">resultados de un experimento</p>
+
+    <h3>La hipótesis</h3>
+    <p>La IA afecta a todos los sistemas políticos, sociales, técnicos y económicos actuales. También al emprendimiento. La hipótesis del experimento, denominado Hercolega, trata de falsear o validar si la IA afecta a dos áreas clave del emprendimiento:</p>
+    <ul>
+      <li>el <strong>desarrollo de software</strong> (cómo se construye) y</li>
+      <li>la <strong>gestión del conocimiento</strong> (cómo se accede al saber y se aplica en la decisión).</li>
+    </ul>
+    <p>La afirmación se sostiene a <strong>nivel de caso, no de generalización</strong>: no se pretende demostrar que "todo el sector ha cambiado" (haría falta el estudio de muchos casos), sino que —como caso demostrable— el emprendimiento asistido por IA es cualitativamente distinto, y describir en qué consiste esa diferencia.</p>
+    <p>A lo largo de todo el experimento se distingue el <strong>resultado comprobado</strong> (lo que ya se demuestra) del <strong>resultado esperado</strong> (lo que el experimento predice y validará con uso real y tiempo).</p>
+
+    <h3>El experimento y su instrumento</h3>
+    <p><strong>Hercolega es un sistema multiagente de IA</strong>: un servicio de conocimiento para el emprendimiento (siete especialistas sobre conocimiento validado y emergente), consultable por la web y por un agente personal externo (Agente Hermes de NousResearch) a través de un estándar abierto (MCP), construido por una persona con agentes de codificación de IA (Claude Code).</p>
+    <p>El experimento incorpora <strong>su propio instrumento de medición honesta</strong>: una capa de observabilidad y un juez automático (un modelo independiente que evalúa la calidad de las respuestas del sistema con una rúbrica).</p>
+
+    <h3>Resultado técnico — el desarrollo de software ha cambiado</h3>
+    <p class="ancla fuerte">Validado por resultado tangible: el sistema existe, y su propia construcción es la prueba.</p>
+    <p>El emprendimiento, como todo sistema complejo, tiene fuerzas estructurales —gravedades— que tiran del fundador y que hay que administrar. Por ejemplo, Eric Ries nombró la <strong>gravedad financiera</strong>: la que empuja a ceder control a cambio de capital. La tesis de este resultado es que la IA no elimina las gravedades: <strong>cambia el mapa de las "gravedades" que el fundador debe enfrentar.</strong></p>
+    <ul>
+      <li><strong>Gravedad financiera</strong> — permanece. Se vigila igual que siempre.</li>
+      <li><strong>Gravedad técnica</strong> — la IA permite vencerla. Antes, convertir una idea en software obligaba a depender de <em>intermediarios decisores</em> (equipo, proveedor, capital para pagarlos) que podían decir "no". Hoy el fundador puede construir sin ceder a ese permiso. Es el paso de una <em>libertad vigilada</em> a una <em>libertad con responsabilidad</em>.</li>
+      <li><strong>Gravedad de la delegación</strong> — la nueva, que aparece al vencer la técnica: la deuda técnica se puede convertir en deuda cognitiva, si la gravedad de la delegación termina consiguiendo que la responsabilidad del fundador sea imposible.</li>
+    </ul>
+    <p>Vencer una gravedad no es quedar libre de gravedad: es enfrentar otra. Y aquí el experimento se demuestra a sí mismo. Todo el rigor con que Hercolega fue construido —verificar las afirmaciones contra el código real en vez de fiarse de lo que la IA da por cierto, un juez que evalúa a la IA generadora, la honestidad epistémica, los inventarios de deuda— resulta ser exactamente <strong>la disciplina de delegar la ejecución sin delegar el criterio.</strong> Esa es la respuesta a la gravedad de la delegación. Por tanto, hay que verificar que la deuda cognitiva es nuestra siguiente "batalla", y cómo se puede afrontar sin perder los beneficios del desarrollo y la implantación asistidos por IA.</p>
+    <p><strong>El resultado,</strong> ni soberbio ni ingenuo: una persona con criterio puede hoy dirigir la construcción de sistemas antes reservados a equipos, con un rigor antes difícil de sostener. No prueba que nadie necesite ya a nadie —se necesita a muchos: al asesor, a la organización, a la propia IA—. Prueba que una dependencia que podría implicar <strong>rendición</strong> (el intermediario decisor sin el cual no existías) ahora puede ser opcional. La necesidad legítima es colaboración. La deuda técnica anterior requiere para su pago conocimiento y capital. La potencial deuda cognitiva actual requiere inteligencia y juicio personal. No implica cesión ni arrendamiento, solo ser consciente y capaz.</p>
+
+    <h3>Resultado funcional — la gestión del conocimiento ha cambiado</h3>
+    <p class="ancla">Resultado en dos tiempos: la capacidad está construida (hoy); su efecto se valida con uso real (pendiente).</p>
+    <p>El conocimiento del emprendimiento existe —en libros, cursos, mentores— pero no está siempre disponible <strong>en el momento de la decisión, y cuando está no está filtrado para esa decisión.</strong> Ese es el dolor que la IA cambia. El emprendedor es una <em>fábrica de decisiones en el tiempo.</em> Toda decisión tiene dos partes: un <strong>pronóstico</strong> (datos, método, experiencia: objetivable) y un <strong>juicio</strong> (personal, de intención: humano). La IA soporta (conocimiento, datos) en el pronóstico y asesora en el juicio (estrategia, opciones, escenarios).</p>
+    <p>El valor de Hercolega para los principales actores del emprendimiento puede verse así:</p>
+    <div class="tabla-wrap">
+      <table>
+        <thead>
+          <tr><th>Pieza</th><th>Papel</th><th>Qué aporta Hercolega</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Emprendedor</strong></td><td>Dar forma a la energía</td><td>luz en el pronóstico (hoy); apoyo al juicio (esperado)</td></tr>
+          <tr><td><strong>Asesor</strong></td><td>El catalizador</td><td>lo libera de lo repetible; incorpora su juicio situado (experiencia)</td></tr>
+          <tr><td><strong>startup-next</strong></td><td>El conocimiento just-in-time</td><td>entrega just-in-time, fiel, epistémicamente honesta</td></tr>
+          <tr><td><strong>Organización</strong> (ONG, aceleradora, otras)</td><td>El crisol</td><td>hace rendir sus incentivos materiales; recicla su experiencia, junta los elementos en su justa medida para que emerja la alquimia</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <ul>
+      <li><strong>Comprobado hoy:</strong> en el <em>pronóstico</em>, el sistema entrega conocimiento validado en el momento preciso, con fidelidad verificable y honestidad epistémica (distingue lo validado de lo emergente). El valor no es el conocimiento en sí —ya existe— sino su entrega contextualizada justo cuando se decide.</li>
+      <li><strong>Esperado:</strong> en el <em>juicio</em>, una síntesis de experiencias equiparables con su probabilidad (un conocimiento experiencial-reputacional, tercera categoría epistémica), que apoye sin sustituir. Extensión coherente del mecanismo, aún por construir. Y, sobre todo, el efecto de todo ello en actores reales —mejores decisiones, asesores que escalan, organizaciones cuyos incentivos rinden más—, que el instrumento (observabilidad + juez) permitirá validar de forma constante.</li>
+    </ul>
+
+    <hr>
+    <p><em>Esta ha sido la síntesis que describe el experimento Hercolega: el emprendimiento y la IA, junto con sus resultados actuales.</em></p>
   </div>
 </section>
 
